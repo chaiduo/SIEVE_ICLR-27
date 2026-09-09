@@ -11,10 +11,22 @@ from typing import Any
 
 import numpy as np
 
+from compare_experiment.config import load_comparison_config
 
-MODES = ("vanilla", "step_hook", "monitor", "predictor", "sieve")
+
+MODES = (
+    "vanilla",
+    "ranger",
+    "drdna",
+    "step_hook",
+    "monitor",
+    "predictor",
+    "sieve",
+)
 MODE_NAMES = {
     "vanilla": "Vanilla",
+    "ranger": "Ranger-style",
+    "drdna": "Dr.DNA-style",
     "step_hook": "Step-hook",
     "monitor": "Monitor + Projection",
     "predictor": "Predictor + Aggregation",
@@ -30,26 +42,44 @@ MODELS = {
 def parse_args() -> argparse.Namespace:
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser()
+    parser.add_argument("--repository-root", type=Path, default=root)
     parser.add_argument(
-        "--forward-root",
+        "--comparison-config",
         type=Path,
-        default=root / "analysis/iclr_v2/online_overhead/forward",
+        default=(
+            root
+            / "compare_experiment/configs/detection_comparison_k28_36d.yaml"
+        ),
     )
     parser.add_argument(
-        "--reverse-root",
+        "--input-root",
         type=Path,
-        default=root / "analysis/iclr_v2/online_overhead/reverse",
+        default=root / "experiments/comparison_36d_k28/overhead_forward_r10",
     )
     parser.add_argument(
         "--output-dir",
         type=Path,
-        default=root / "analysis/iclr_v2/online_overhead/combined",
+        default=(
+            root
+            / "experiments/comparison_36d_k28/overhead_forward_r10/combined"
+        ),
     )
     parser.add_argument("--bootstrap-replicates", type=int, default=10_000)
     parser.add_argument("--seed", type=int, default=20_260_814)
+    parser.add_argument("--samples-per-model", type=int, default=50)
+    parser.add_argument("--warmup-samples", type=int, default=10)
+    parser.add_argument("--repeats", type=int, default=10)
+    parser.add_argument("--online-steps", type=int, default=28)
     args = parser.parse_args()
-    if args.bootstrap_replicates <= 0:
-        parser.error("--bootstrap-replicates must be positive")
+    for name in (
+        "bootstrap_replicates",
+        "samples_per_model",
+        "warmup_samples",
+        "repeats",
+        "online_steps",
+    ):
+        if getattr(args, name) <= 0:
+            parser.error(f"--{name.replace('_', '-')} must be positive")
     return args
 
 
@@ -163,6 +193,8 @@ def summarize_model(
     summaries = []
     for mode_index, mode in enumerate(MODES):
         selected = by_mode[mode]
+        if not selected:
+            continue
         latency = latency_statistics(selected, "latency_ms")
         if latency is None:
             raise ValueError(f"No latency values for {model_key}/{mode}")
@@ -311,25 +343,71 @@ def deployment_rows(
 
 def main() -> int:
     args = parse_args()
+    root = args.repository_root.resolve()
+    comparison = load_comparison_config(
+        args.comparison_config,
+        repository_root=root,
+    )
+    if args.online_steps != comparison.max_steps:
+        raise ValueError(
+            "--online-steps must match the comparison configuration"
+        )
     all_summaries = []
     for model_index, model_key in enumerate(MODELS):
-        forward = read_rows(
-            args.forward_root / model_key / "samples.csv", "forward"
-        )
-        reverse = read_rows(
-            args.reverse_root / model_key / "samples.csv", "reverse"
+        rows = read_rows(
+            args.input_root / model_key / "samples.csv", "forward"
         )
         all_summaries.extend(
             summarize_model(
                 model_key,
-                forward + reverse,
-                forward,
+                rows,
+                rows,
                 bootstrap_replicates=args.bootstrap_replicates,
                 seed=args.seed + 100 * model_index,
             )
         )
 
     deployed = deployment_rows(all_summaries)
+    modes = tuple(
+        mode
+        for mode in MODES
+        if any(item["mode"] == mode for item in all_summaries)
+    )
+    by_mode = {
+        mode: {
+            "model_count": sum(
+                item["mode"] == mode for item in all_summaries
+            ),
+            "mean_latency_overhead_percent": float(
+                np.mean(
+                    [
+                        item["latency_overhead_percent"]
+                        for item in all_summaries
+                        if item["mode"] == mode
+                    ]
+                )
+            ),
+            "mean_throughput_change_percent": float(
+                np.mean(
+                    [
+                        item["throughput_change_percent"]
+                        for item in all_summaries
+                        if item["mode"] == mode
+                    ]
+                )
+            ),
+            "mean_extra_peak_allocated_mb": float(
+                np.mean(
+                    [
+                        item["extra_peak_allocated_mb"]
+                        for item in all_summaries
+                        if item["mode"] == mode
+                    ]
+                )
+            ),
+        }
+        for mode in modes
+    }
     aggregate = {
         "model_count": len(deployed),
         "mean_end_to_end_overhead_percent": float(
@@ -340,15 +418,7 @@ def main() -> int:
         "mean_throughput_change_percent": float(
             np.mean([row["throughput_change_percent"] for row in deployed])
         ),
-        "mean_step_hook_overhead_percent": float(
-            np.mean(
-                [
-                    row["latency_overhead_percent"]
-                    for row in all_summaries
-                    if row["mode"] == "step_hook"
-                ]
-            )
-        ),
+        "by_mode": by_mode,
     }
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -365,18 +435,24 @@ def main() -> int:
                     "gpu": "NVIDIA H20",
                     "batch_size": 1,
                     "max_new_tokens": 50,
-                    "samples_per_model": 50,
-                    "repeats_per_order": 2,
-                    "orders": ["forward", "reverse"],
-                    "observations_per_model_mode": 200,
-                    "warmup_samples": 5,
-                    "online_steps": 2,
-                    "monitored_layers": [6, 7, 22, 23, 24, 25, 26, 27],
+                    "samples_per_model": args.samples_per_model,
+                    "repeats_per_order": args.repeats,
+                    "orders": ["forward"],
+                    "observations_per_model_mode": (
+                        args.samples_per_model * args.repeats
+                    ),
+                    "warmup_samples": args.warmup_samples,
+                    "online_steps": args.online_steps,
+                    "modes": list(modes),
+                    "layer_pairs": [
+                        list(pair) for pair in comparison.layer_pairs
+                    ],
+                    "monitored_layers": list(comparison.monitored_layers),
                     "bootstrap_replicates": args.bootstrap_replicates,
                     "bootstrap_seed": args.seed,
                     "memory_note": (
-                        "Peak-memory deltas use the forward order because "
-                        "the reverse order loads the predictor before Vanilla."
+                        "Peak-memory deltas are measured in the same forward "
+                        "mode order as the latency measurements."
                     ),
                 },
                 "aggregate": aggregate,

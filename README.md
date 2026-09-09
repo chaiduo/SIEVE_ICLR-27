@@ -10,9 +10,9 @@ XGBoost detector to identify corruptions that are likely to cause a significant
 semantic failure. The repository is organized for reproducible evaluation
 across three vision-language models and three multimodal benchmarks.
 
-> The public repository contains source code, configuration, tests, analysis
-> reports, and compact figure data. Model checkpoints, datasets, and large
-> JSONL artifacts are intentionally kept outside Git.
+> The public repository contains source code, configuration, tests, and
+> reproducible derived results. Model checkpoints, datasets, and large JSONL
+> telemetry remain local and are intentionally kept outside Git.
 
 ## Highlights
 
@@ -20,30 +20,23 @@ across three vision-language models and three multimodal benchmarks.
 - Group-aware `Fit` / `Calibration` / `Final Test` isolation.
 - Prefill activation fault injection with configurable bit policies.
 - Layer-aware residual mapping model for fault-free feature prediction.
-- Compact 48D monitoring candidate selected using validation-only evidence.
+- Fit-only configuration selection for the final 36D/`K=28` monitor.
 - Complete 9-task evaluation matrix:
   Qwen2.5-VL, LLaVA-1.5, and InternVL3 on EarthVQA, LingoQA, and VQAv2.
 - Online monitoring and cross-domain detector-transfer experiments.
 
 ## Repository Status
 
-The repository contains two related experiment tracks:
-
-| Track | Representation | Purpose |
-| --- | --- | --- |
-| v2 reference track | 6 layer pairs, `K=2`, 72D | Reproducible baseline artifact and historical comparison |
-| compact track | 4 layer pairs, `K=2`, 48D | Validation-selected compact detector candidate |
-| telemetry extension | Prefix telemetry up to `K=50` | Offline step-window ablations for `K=2,4,8,16` |
-
-The compact layer pairs are:
+The current experiment track uses 50-step telemetry and selects its final
+configuration strictly within the outer Fit partition:
 
 ```text
-(6, 7), (22, 23), (25, 26), (26, 27)
+(6, 7), (24, 25), (26, 27), K=28
 ```
 
-The raw telemetry extension is written to `analysis/telemetry_50/` and is
-separate from the reference artifacts under `artifacts/iclr_v2/`. Large local
-outputs are not versioned.
+Raw telemetry, clean profiles, and Predictor checkpoints are stored below
+`experiments/telemetry_50/<job>/`. Derived 36D features, Fit-only selection,
+and component ablations are stored under `experiments/`.
 
 ## Method
 
@@ -78,32 +71,21 @@ cross the outer partition boundary:
 
 ## Reported Results
 
-The validation-selected 48D analysis reports the following nine-task
+The Fit-only-selected 36D/`K=28` detector reports the following nine-task
 Final-Test macro averages:
 
 | Cohort | Precision | Recall | F1 | FPR |
 | --- | ---: | ---: | ---: | ---: |
-| Full | 93.74% | 91.23% | 92.03% | 0.210% |
-| Finite | 88.90% | 83.45% | 84.75% | 0.210% |
+| Full | 96.38% | 91.49% | 93.78% | 0.107% |
+| Canonical-finite | 91.20% | 84.15% | 87.18% | 0.107% |
 
-The 48D representation removes one third of the 72D features while retaining
-comparable Fit-holdout performance in a 20-seed paired validation experiment.
-The detailed reports are available in:
+Configuration selection and ablation results are available in:
 
 ```text
-analysis/layer_pair_48d_stability/
-analysis/layer_pair_subset_search/
-analysis/detector_transfer_48d/
+experiments/fit_only_configuration_selection/
+experiments/ablation_36d_k28_fit_only/
+experiments/appendix_36d_k28/
 ```
-
-The LLaVA prefix-step study is available in:
-
-```text
-analysis/step_ablation_telemetry50/
-```
-
-It compares `K=2,4,8,16` and larger reference windows using the same
-telemetry campaign.
 
 ## Installation
 
@@ -216,36 +198,12 @@ Before a long GPU run, use `--dry-run` and verify the configured output paths.
 Injection outputs are written atomically and can be resumed from a completed
 fault-run boundary.
 
-## Extended Telemetry and Step Ablation
+## Telemetry-Derived Studies
 
-To retain a longer prefix window for offline step studies, use:
-
-```bash
-bash scripts/run_telemetry50_job.sh \
-  0 \
-  Qwen2.5-VL-7B/.venv/bin/python \
-  qwen25_vl_earthvqa
-```
-
-The script writes to:
-
-```text
-analysis/telemetry_50/<job>/
-```
-
-`--telemetry-max-steps 50` changes the retained telemetry prefix. It does not
-force the model to generate 50 tokens; generation remains controlled by
-`max_new_tokens` in the model configuration.
-
-After a complete telemetry campaign, the 48D step runner evaluates:
-
-```bash
-PYTHONPATH=src Qwen2.5-VL-7B/.venv/bin/python \
-  scripts/run_48d_step_ablation.py \
-  --input-root analysis/telemetry_50 \
-  --output-dir analysis/step_ablation_telemetry50 \
-  --overwrite
-```
+The 50-step telemetry campaign is complete. New feature configurations are
+derived from `experiments/telemetry_50/` without repeating fault injection.
+The final configuration uses the first `min(28, T)` observed decoding steps;
+early EOS never forces generation to 28 tokens.
 
 ## Baseline Comparison
 
@@ -254,9 +212,8 @@ on the same fault executions. This avoids comparing methods that observed
 different injected samples.
 
 ```bash
-./compare_experiment/run_model_comparison.sh qwen25_vl 2
-./compare_experiment/run_model_comparison.sh internvl3 3
-./compare_experiment/run_model_comparison.sh llava15 4
+tmux new-session -d -s sieve_comparison_36d_k28 \
+  'cd /data01/cd_workspace/Detect_SDC && bash scripts/run_comparison_36d_k28_all.sh'
 ```
 
 ## Reproducibility
@@ -264,7 +221,6 @@ different injected samples.
 The detailed protocol and environment assumptions are documented in:
 
 - [`docs/reproducibility.md`](docs/reproducibility.md)
-- [`docs/sieve_iclr_revision_plan.md`](docs/sieve_iclr_revision_plan.md)
 - [`docs/xgboost_current_methods_and_results.md`](docs/xgboost_current_methods_and_results.md)
 - [`reproducibility/reference_sha256.txt`](reproducibility/reference_sha256.txt)
 

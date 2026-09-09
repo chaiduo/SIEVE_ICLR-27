@@ -1,0 +1,38 @@
+schema_version: 2
+
+experiment:
+  source_config: configs/experiments/current.yaml
+  results_root: experiments/comparison_36d_k28/results
+  methods:
+    - ranger_style
+    - drdna_style
+    - sieve
+
+monitoring:
+  layer_pairs:
+    - [6, 7]
+    - [24, 25]
+    - [26, 27]
+  max_steps: 28
+
+cohorts:
+  profile_seed: 42
+  ranger_profile_fraction_of_fit: 0.2
+  maximum_profile_samples: 1000
+
+drdna:
+  cohort_size: 64
+  bins: 10
+  strike_count: 3
+  random_seed: 42
+  lambda_individual: 1.0
+  lambda_layer: 1.0
+  lambda_extreme: 1.0
+
+calibration:
+  strategy: maximize_f1
+  supplementary_fpr_budgets: [0.005, 0.01, 0.02, 0.05]
+
+evaluation:
+  bootstrap_replicates: 10000
+  bootstrap_seed: 20260907

@@ -12,6 +12,7 @@ from detect_sdc.detector import (
     get_feature_columns,
     prepare_features,
     significant_sdc_negative_mask,
+    strict_feature_finite_mask,
 )
 
 
@@ -96,6 +97,21 @@ class XGBoostDetectorTest(unittest.TestCase):
 
         self.assertEqual(columns, ["cos_sim_mean_p1_2"])
         self.assertTrue(features.isna().iloc[0, 0])
+
+    def test_strict_feature_finite_mask_rejects_partial_non_finite_rows(self):
+        frame = pd.DataFrame(
+            {
+                "feature_a": [1.0, np.nan, np.inf, 1e40],
+                "feature_b": [2.0, 3.0, 4.0, 5.0],
+            }
+        )
+
+        mask = strict_feature_finite_mask(
+            frame,
+            ["feature_a", "feature_b"],
+        )
+
+        np.testing.assert_array_equal(mask.to_numpy(), [True, False, False, False])
 
     def test_binary_metrics_use_significant_class_as_target(self):
         metrics = binary_metrics(

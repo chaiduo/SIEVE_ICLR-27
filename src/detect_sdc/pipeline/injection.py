@@ -72,7 +72,7 @@ class _InjectionResumeState:
 def run_injection_samples(
     model_adapter: ModelAdapter,
     dataset_adapter: DatasetAdapter,
-    mapping_model: Any,
+    mapping_model: Any | None,
     clean_answers: CleanAnswerIndex,
     output_path: str | Path,
     *,
@@ -94,6 +94,7 @@ def run_injection_samples(
     injector_factory: Callable[..., Any] = FaultInjector,
     auxiliary_monitor_factory: Callable[[Any], Any] | None = None,
     auxiliary_scorer: Callable[[Any], Mapping[str, Any]] | None = None,
+    collect_telemetry: bool = True,
 ) -> dict[str, Any]:
     bit_policy = str(bit_policy).strip().lower()
     if (auxiliary_monitor_factory is None) != (auxiliary_scorer is None):
@@ -151,15 +152,18 @@ def run_injection_samples(
         stream_mode = "a"
     try:
         model_adapter.load(device)
-        mapping_model = mapping_model.to(device).eval()
-        profiler = profiler_factory(
-            model_adapter.model,
-            proj_dim=projection_dim,
-            proj_method=projection_method,
-            seed=profiler_seed,
-        )
+        if collect_telemetry:
+            if mapping_model is None:
+                raise ValueError("collect_telemetry requires a mapping model")
+            mapping_model = mapping_model.to(device).eval()
+            profiler = profiler_factory(
+                model_adapter.model,
+                proj_dim=projection_dim,
+                proj_method=projection_method,
+                seed=profiler_seed,
+            )
+            profiler.register()
         injector = injector_factory(model_adapter.model, mode="activation")
-        profiler.register()
         if auxiliary_monitor_factory is not None:
             auxiliary_monitor = auxiliary_monitor_factory(model_adapter.model)
             auxiliary_monitor.register()
@@ -194,7 +198,8 @@ def run_injection_samples(
                             "Dataset semantic_group_id differs from split "
                             f"manifest for {sample.orig_id}"
                         )
-                    profiler.reset(clear_stats=True)
+                    if profiler is not None:
+                        profiler.reset(clear_stats=True)
                     injector.reset()
                     if injected:
                         injector.set_num_bits(num_bits)
@@ -209,15 +214,20 @@ def run_injection_samples(
                             sample.image,
                             max_new_tokens=max_new_tokens,
                         )
-                        profiler.finalize()
-                        telemetry = (
-                            profiler.get_attn_proj_model_compare_result(
+                        if profiler is None:
+                            telemetry = {
+                                "num_steps": 0,
+                                "num_layer_pairs": 0,
+                                "records": [],
+                            }
+                        else:
+                            profiler.finalize()
+                            telemetry = profiler.get_attn_proj_model_compare_result(
                                 predictor_model=mapping_model,
                                 device=device,
                                 include_vectors=False,
                                 max_steps=telemetry_max_steps,
                             )
-                        )
                         auxiliary_values = (
                             {}
                             if auxiliary_monitor is None
@@ -298,6 +308,7 @@ def run_injection_samples(
         "retention_policy": "all_runs",
         "num_bits": num_bits,
         "bit_policy": bit_policy,
+        "telemetry_collected": bool(collect_telemetry),
         "telemetry_max_steps": telemetry_max_steps,
         "resumed_from_run": resume_from_run,
         "output": str(destination),
@@ -319,6 +330,7 @@ def run_injection_job(
     telemetry_max_steps: int | None = None,
     auxiliary_monitor_factory: Callable[[Any], Any] | None = None,
     auxiliary_scorer: Callable[[Any], Mapping[str, Any]] | None = None,
+    collect_telemetry: bool = True,
 ) -> dict[str, Any]:
     job = load_pipeline_job(
         config_path,
@@ -342,7 +354,11 @@ def run_injection_job(
         repository_root=repository_root,
     )
     checkpoint = Path(mapping_model_path or job.paths.mapping_model).resolve()
-    mapping_model = load_mapping_model(injection, checkpoint, device=device)
+    mapping_model = (
+        load_mapping_model(injection, checkpoint, device=device)
+        if collect_telemetry
+        else None
+    )
 
     summary = run_injection_samples(
         load_model_adapter(job.model_config_path),
@@ -366,6 +382,7 @@ def run_injection_job(
         resume_from_run=resume_from_run,
         auxiliary_monitor_factory=auxiliary_monitor_factory,
         auxiliary_scorer=auxiliary_scorer,
+        collect_telemetry=collect_telemetry,
     )
     summary.update(
         {

@@ -1,7 +1,7 @@
 # Detect_SDC ICLR-v2 Reproducibility Guide
 
-本文档描述当前正式实验协议。旧版 85/15 `orig_id` 划分、SDC-only fault
-retention 和 replay comparison 已废弃；历史结果只用于回归对照。
+本文档描述当前 36D/`K=28` 正式实验协议。旧版 85/15 `orig_id` 划分、
+SDC-only fault retention、72D/K=4 和 replay comparison 已废弃。
 
 ## 1. 固定协议
 
@@ -10,14 +10,14 @@ retention 和 replay comparison 已废弃；历史结果只用于回归对照。
 - 每个数据集固定 5,000 个输入；
 - semantic-group Fit/Calibration/Final-test 划分；
 - Prefill activation double-bit flip；
-- 正式主实验使用 `bit_policy: random`；`mantissa_only`、`low_mantissa`
-  和 `low_exponent` 仅用于独立的 small-deviation campaign；
+- 正式主实验使用 `bit_policy: random`；
 - 每个输入 10 个 fault runs，全部保留；
 - 64 维正交投影；
 - Mapping hidden width 64、8 个 residual blocks；
-- 6 个层对、前 2 个 decoding steps、72 个特征；
+- 3 个层对 `(6,7)`、`(24,25)`、`(26,27)`，前 `min(28, T)` 个实际
+  decoding steps，36 个特征；
 - Calibration 使用全部正负样本选择 Significant-SDC F1 最大的阈值；
-- Full 保留全部 Final Test 行；Finite 仅排除 72 个特征全部为 NaN 的行；
+- Full 保留全部 Final Test 行；canonical-finite 使用固定的可比子集；
 - Final test 只用于最终报告。
 
 主配置：`configs/experiments/current.yaml`。
@@ -151,90 +151,69 @@ done
 
 ## 7. 单次故障方法对比
 
-正式对比不再 replay 历史故障。每个 fault execution 同时采集 SIEVE telemetry、
-Ranger score 和 Dr.DNA score：
+正式对比不再 replay 历史故障。最终 36D/`K=28` 对比在每个 fault execution 中
+采集 Ranger-style 与 Dr.DNA-style 信号，并与冻结的 SIEVE 特征、Detector 和
+数据划分对齐：
 
 ```bash
-./compare_experiment/run_model_comparison.sh qwen25_vl 2
-./compare_experiment/run_model_comparison.sh internvl3 3
-./compare_experiment/run_model_comparison.sh llava15 4
+tmux new-session -d -s sieve_comparison_36d_k28 \
+  'cd /data01/cd_workspace/Detect_SDC && bash scripts/run_comparison_36d_k28_all.sh'
 ```
 
-手工执行时，关键步骤为：
-
-```bash
-PYTHONPATH=src:. "$PYTHON" -m compare_experiment.profile_baselines   --job "$JOB" --device cuda:0
-
-PYTHONPATH=src:. "$PYTHON" -m compare_experiment.collect_detection_data   --job "$JOB" --device cuda:0
-
-PYTHONPATH=src:. "$PYTHON" -m compare_experiment.evaluate_results   --job "$JOB"
-```
-
-九组完成后：
-
-```bash
-PYTHONPATH=src:. Qwen2.5-VL-7B/.venv/bin/python   -m compare_experiment.summarize_results
-```
-
-置信区间按 `semantic_group_id` cluster bootstrap，而不是按 fault row 独立重采样。
+结果写入 `experiments/comparison_36d_k28/`。置信区间按原始样本簇
+bootstrap，而不是按 fault row 独立重采样。
 
 ## 8. Artifact 布局
 
 ```text
-artifacts/iclr_v2/<job>/
-├── json/
-│   ├── profile.json
-│   ├── mapping.jsonl
-│   ├── injection.jsonl
-│   └── labels.jsonl
-├── model/
-│   └── mapping_model.pt
-├── train_data/
-│   ├── fit.csv
-│   ├── calibration.csv
-│   └── test.csv
+experiments/telemetry_50/<job>/
+├── profile.json
+├── mapping_model.pt
+├── injection.jsonl
+└── labels.jsonl
+
+experiments/step_ablation_36d/<job>/k_28/
+├── features.csv
+├── fit.csv
+├── calibration.csv
+├── test.csv
 └── output/
     ├── metrics_summary.json
-    ├── significant_sdc_detector.ubj
-    └── *_predictions.csv
+    └── significant_sdc_detector.ubj
 
-compare_experiment/results_v2/<job>/
-├── profiles.json
-└── evaluation/
-    ├── metrics.json
-    └── predictions.csv
+experiments/comparison_36d_k28/
+├── results/<job>/
+│   ├── profiles.json
+│   ├── score_records.jsonl
+│   └── evaluation/
+└── overhead/
 ```
 
 大文件不进入 Git。归档时生成完整 SHA-256 manifest，并保留 split assignment
 hash、Git commit、环境快照和硬件信息。
 
-## 9. 消融实验
+## 9. 配置选择与组件消融
 
-所有消融必须复用同一 Fit/Calibration/Final-test manifest 和 Calibration
-最大 F1 阈值协议：
+配置选择在 outer-Fit 内部完成，比较 `36D/48D/60D/72D` 与
+`K={1,2,4,8,12,16,20,24,28,32}`。最终 36D/`K=28` 组件消融移除一个 layer pair
+或一种 discrepancy metric，且不读取 outer Calibration 或 Final Test：
 
 ```bash
-PYTHONPATH=src Qwen2.5-VL-7B/.venv/bin/python   scripts/run_layer_pair_design_ablation.py   --model Qwen2.5-VL-7B --dataset EarthVQA
-
-PYTHONPATH=src Qwen2.5-VL-7B/.venv/bin/python   scripts/run_feature_group_ablation.py --model all --dataset all
-
-PYTHONPATH=src Qwen2.5-VL-7B/.venv/bin/python   scripts/run_compact_feature_ablation.py --model all --dataset all
-
-PYTHONPATH=src Qwen2.5-VL-7B/.venv/bin/python   scripts/run_online_step_ablation.py   --model Qwen2.5-VL-7B --dataset EarthVQA
+PYTHONPATH=src Qwen2.5-VL-7B/.venv/bin/python \
+  scripts/run_36d_k28_component_ablation.py
 ```
-
-Layer-pair runner 同时包含 Current、Leave-One-Pair-Out 和布局预算配置。
 
 ## 10. 在线开销
 
-在线开销只在最终 Detector 和阈值冻结后测量：
+在线开销仅在最终 Detector 和阈值冻结后测量。三个 LingoQA 作业均使用 50 个
+测量样本、10 个 warmup、10 次重复、固定正向 mode order 与 `K=28`：
 
 ```bash
-PYTHONPATH=src CUDA_VISIBLE_DEVICES=2   Qwen2.5-VL-7B/.venv/bin/python   scripts/benchmark_online_overhead.py   --job qwen25_vl_lingoqa --device cuda:0   --samples 50 --warmup-samples 5 --repeats 2   --online-steps 2 --feature-profile full --mode-order forward
+PYTHONPATH=src Qwen2.5-VL-7B/.venv/bin/python \
+  scripts/summarize_online_overhead.py \
+  --input-root experiments/comparison_36d_k28/overhead_forward_r10 \
+  --online-steps 28
 ```
-
-还需执行 reverse mode order，并使用 `scripts/summarize_online_overhead.py`
-进行 paired bootstrap。
 
 ## 11. 验收清单
 

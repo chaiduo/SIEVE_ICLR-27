@@ -38,79 +38,79 @@ execution:
     qwen25_vl_earthvqa:
       model: qwen25_vl
       dataset: earthvqa
-      profile_output: artifacts/iclr_v2/qwen25_vl_earthvqa/json/profile.json
-      mapping_data: artifacts/iclr_v2/qwen25_vl_earthvqa/json/mapping.jsonl
-      mapping_model: artifacts/iclr_v2/qwen25_vl_earthvqa/model/mapping_model.pt
-      injected_output: artifacts/iclr_v2/qwen25_vl_earthvqa/json/injection.jsonl
-      labeled_output: artifacts/iclr_v2/qwen25_vl_earthvqa/json/labels.jsonl
+      profile_output: experiments/telemetry_50/qwen25_vl_earthvqa/profile.json
+      mapping_data: experiments/telemetry_50/qwen25_vl_earthvqa/mapping.jsonl
+      mapping_model: experiments/telemetry_50/qwen25_vl_earthvqa/mapping_model.pt
+      injected_output: experiments/telemetry_50/qwen25_vl_earthvqa/injection.jsonl
+      labeled_output: experiments/telemetry_50/qwen25_vl_earthvqa/labels.jsonl
     qwen25_vl_lingoqa:
       model: qwen25_vl
       dataset: lingoqa
       instrumentation:
         projection_method: project
-      profile_output: artifacts/iclr_v2/qwen25_vl_lingoqa/json/profile.json
-      mapping_data: artifacts/iclr_v2/qwen25_vl_lingoqa/json/mapping.jsonl
-      mapping_model: artifacts/iclr_v2/qwen25_vl_lingoqa/model/mapping_model.pt
-      injected_output: artifacts/iclr_v2/qwen25_vl_lingoqa/json/injection.jsonl
-      labeled_output: artifacts/iclr_v2/qwen25_vl_lingoqa/json/labels.jsonl
+      profile_output: experiments/telemetry_50/qwen25_vl_lingoqa/profile.json
+      mapping_data: experiments/telemetry_50/qwen25_vl_lingoqa/mapping.jsonl
+      mapping_model: experiments/telemetry_50/qwen25_vl_lingoqa/mapping_model.pt
+      injected_output: experiments/telemetry_50/qwen25_vl_lingoqa/injection.jsonl
+      labeled_output: experiments/telemetry_50/qwen25_vl_lingoqa/labels.jsonl
     qwen25_vl_vqav2:
       model: qwen25_vl
       dataset: vqav2
-      profile_output: artifacts/iclr_v2/qwen25_vl_vqav2/json/profile.json
-      mapping_data: artifacts/iclr_v2/qwen25_vl_vqav2/json/mapping.jsonl
-      mapping_model: artifacts/iclr_v2/qwen25_vl_vqav2/model/mapping_model.pt
-      injected_output: artifacts/iclr_v2/qwen25_vl_vqav2/json/injection.jsonl
-      labeled_output: artifacts/iclr_v2/qwen25_vl_vqav2/json/labels.jsonl
+      profile_output: experiments/telemetry_50/qwen25_vl_vqav2/profile.json
+      mapping_data: experiments/telemetry_50/qwen25_vl_vqav2/mapping.jsonl
+      mapping_model: experiments/telemetry_50/qwen25_vl_vqav2/mapping_model.pt
+      injected_output: experiments/telemetry_50/qwen25_vl_vqav2/injection.jsonl
+      labeled_output: experiments/telemetry_50/qwen25_vl_vqav2/labels.jsonl
     llava15_earthvqa:
       model: llava15
       dataset: earthvqa
-      profile_output: artifacts/iclr_v2/llava15_earthvqa/json/profile.json
-      mapping_data: artifacts/iclr_v2/llava15_earthvqa/json/mapping.jsonl
-      mapping_model: artifacts/iclr_v2/llava15_earthvqa/model/mapping_model.pt
-      injected_output: artifacts/iclr_v2/llava15_earthvqa/json/injection.jsonl
-      labeled_output: artifacts/iclr_v2/llava15_earthvqa/json/labels.jsonl
+      profile_output: experiments/telemetry_50/llava15_earthvqa/profile.json
+      mapping_data: experiments/telemetry_50/llava15_earthvqa/mapping.jsonl
+      mapping_model: experiments/telemetry_50/llava15_earthvqa/mapping_model.pt
+      injected_output: experiments/telemetry_50/llava15_earthvqa/injection.jsonl
+      labeled_output: experiments/telemetry_50/llava15_earthvqa/labels.jsonl
     llava15_lingoqa:
       model: llava15
       dataset: lingoqa
-      profile_output: artifacts/iclr_v2/llava15_lingoqa/json/profile.json
-      mapping_data: artifacts/iclr_v2/llava15_lingoqa/json/mapping.jsonl
-      mapping_model: artifacts/iclr_v2/llava15_lingoqa/model/mapping_model.pt
-      injected_output: artifacts/iclr_v2/llava15_lingoqa/json/injection.jsonl
-      labeled_output: artifacts/iclr_v2/llava15_lingoqa/json/labels.jsonl
+      profile_output: experiments/telemetry_50/llava15_lingoqa/profile.json
+      mapping_data: experiments/telemetry_50/llava15_lingoqa/mapping.jsonl
+      mapping_model: experiments/telemetry_50/llava15_lingoqa/mapping_model.pt
+      injected_output: experiments/telemetry_50/llava15_lingoqa/injection.jsonl
+      labeled_output: experiments/telemetry_50/llava15_lingoqa/labels.jsonl
     llava15_vqav2:
       model: llava15
       dataset: vqav2
-      profile_output: artifacts/iclr_v2/llava15_vqav2/json/profile.json
-      mapping_data: artifacts/iclr_v2/llava15_vqav2/json/mapping.jsonl
-      mapping_model: artifacts/iclr_v2/llava15_vqav2/model/mapping_model.pt
-      injected_output: artifacts/iclr_v2/llava15_vqav2/json/injection.jsonl
-      labeled_output: artifacts/iclr_v2/llava15_vqav2/json/labels.jsonl
+      profile_output: experiments/telemetry_50/llava15_vqav2/profile.json
+      mapping_data: experiments/telemetry_50/llava15_vqav2/mapping.jsonl
+      mapping_model: experiments/telemetry_50/llava15_vqav2/mapping_model.pt
+      injected_output: experiments/telemetry_50/llava15_vqav2/injection.jsonl
+      labeled_output: experiments/telemetry_50/llava15_vqav2/labels.jsonl
     internvl3_earthvqa:
       model: internvl3
       dataset: earthvqa
-      profile_output: artifacts/iclr_v2/internvl3_earthvqa/json/profile.json
-      mapping_data: artifacts/iclr_v2/internvl3_earthvqa/json/mapping.jsonl
-      mapping_model: artifacts/iclr_v2/internvl3_earthvqa/model/mapping_model.pt
-      injected_output: artifacts/iclr_v2/internvl3_earthvqa/json/injection.jsonl
-      labeled_output: artifacts/iclr_v2/internvl3_earthvqa/json/labels.jsonl
+      profile_output: experiments/telemetry_50/internvl3_earthvqa/profile.json
+      mapping_data: experiments/telemetry_50/internvl3_earthvqa/mapping.jsonl
+      mapping_model: experiments/telemetry_50/internvl3_earthvqa/mapping_model.pt
+      injected_output: experiments/telemetry_50/internvl3_earthvqa/injection.jsonl
+      labeled_output: experiments/telemetry_50/internvl3_earthvqa/labels.jsonl
     internvl3_lingoqa:
       model: internvl3
       dataset: lingoqa
       instrumentation:
         projection_method: project
-      profile_output: artifacts/iclr_v2/internvl3_lingoqa/json/profile.json
-      mapping_data: artifacts/iclr_v2/internvl3_lingoqa/json/mapping.jsonl
-      mapping_model: artifacts/iclr_v2/internvl3_lingoqa/model/mapping_model.pt
-      injected_output: artifacts/iclr_v2/internvl3_lingoqa/json/injection.jsonl
-      labeled_output: artifacts/iclr_v2/internvl3_lingoqa/json/labels.jsonl
+      profile_output: experiments/telemetry_50/internvl3_lingoqa/profile.json
+      mapping_data: experiments/telemetry_50/internvl3_lingoqa/mapping.jsonl
+      mapping_model: experiments/telemetry_50/internvl3_lingoqa/mapping_model.pt
+      injected_output: experiments/telemetry_50/internvl3_lingoqa/injection.jsonl
+      labeled_output: experiments/telemetry_50/internvl3_lingoqa/labels.jsonl
     internvl3_vqav2:
       model: internvl3
       dataset: vqav2
-      profile_output: artifacts/iclr_v2/internvl3_vqav2/json/profile.json
-      mapping_data: artifacts/iclr_v2/internvl3_vqav2/json/mapping.jsonl
-      mapping_model: artifacts/iclr_v2/internvl3_vqav2/model/mapping_model.pt
-      injected_output: artifacts/iclr_v2/internvl3_vqav2/json/injection.jsonl
-      labeled_output: artifacts/iclr_v2/internvl3_vqav2/json/labels.jsonl
+      profile_output: experiments/telemetry_50/internvl3_vqav2/profile.json
+      mapping_data: experiments/telemetry_50/internvl3_vqav2/mapping.jsonl
+      mapping_model: experiments/telemetry_50/internvl3_vqav2/mapping_model.pt
+      injected_output: experiments/telemetry_50/internvl3_vqav2/injection.jsonl
+      labeled_output: experiments/telemetry_50/internvl3_vqav2/labels.jsonl
 
 labeling:
   model_path: /data01/cd_workspace/llm/prometheus-7b-v2.0
@@ -145,66 +145,66 @@ featurization:
     qwen25_vl_earthvqa:
       model: qwen25_vl
       dataset: earthvqa
-      input: artifacts/iclr_v2/qwen25_vl_earthvqa/json/labels.jsonl
-      fit_output: artifacts/iclr_v2/qwen25_vl_earthvqa/train_data/fit.csv
-      calibration_output: artifacts/iclr_v2/qwen25_vl_earthvqa/train_data/calibration.csv
-      test_output: artifacts/iclr_v2/qwen25_vl_earthvqa/train_data/test.csv
+      input: experiments/telemetry_50/qwen25_vl_earthvqa/labels.jsonl
+      fit_output: experiments/telemetry_50/qwen25_vl_earthvqa/derived_72d_k2/fit.csv
+      calibration_output: experiments/telemetry_50/qwen25_vl_earthvqa/derived_72d_k2/calibration.csv
+      test_output: experiments/telemetry_50/qwen25_vl_earthvqa/derived_72d_k2/test.csv
     qwen25_vl_lingoqa:
       model: qwen25_vl
       dataset: lingoqa
-      input: artifacts/iclr_v2/qwen25_vl_lingoqa/json/labels.jsonl
-      fit_output: artifacts/iclr_v2/qwen25_vl_lingoqa/train_data/fit.csv
-      calibration_output: artifacts/iclr_v2/qwen25_vl_lingoqa/train_data/calibration.csv
-      test_output: artifacts/iclr_v2/qwen25_vl_lingoqa/train_data/test.csv
+      input: experiments/telemetry_50/qwen25_vl_lingoqa/labels.jsonl
+      fit_output: experiments/telemetry_50/qwen25_vl_lingoqa/derived_72d_k2/fit.csv
+      calibration_output: experiments/telemetry_50/qwen25_vl_lingoqa/derived_72d_k2/calibration.csv
+      test_output: experiments/telemetry_50/qwen25_vl_lingoqa/derived_72d_k2/test.csv
     qwen25_vl_vqav2:
       model: qwen25_vl
       dataset: vqav2
-      input: artifacts/iclr_v2/qwen25_vl_vqav2/json/labels.jsonl
-      fit_output: artifacts/iclr_v2/qwen25_vl_vqav2/train_data/fit.csv
-      calibration_output: artifacts/iclr_v2/qwen25_vl_vqav2/train_data/calibration.csv
-      test_output: artifacts/iclr_v2/qwen25_vl_vqav2/train_data/test.csv
+      input: experiments/telemetry_50/qwen25_vl_vqav2/labels.jsonl
+      fit_output: experiments/telemetry_50/qwen25_vl_vqav2/derived_72d_k2/fit.csv
+      calibration_output: experiments/telemetry_50/qwen25_vl_vqav2/derived_72d_k2/calibration.csv
+      test_output: experiments/telemetry_50/qwen25_vl_vqav2/derived_72d_k2/test.csv
     llava15_earthvqa:
       model: llava15
       dataset: earthvqa
-      input: artifacts/iclr_v2/llava15_earthvqa/json/labels.jsonl
-      fit_output: artifacts/iclr_v2/llava15_earthvqa/train_data/fit.csv
-      calibration_output: artifacts/iclr_v2/llava15_earthvqa/train_data/calibration.csv
-      test_output: artifacts/iclr_v2/llava15_earthvqa/train_data/test.csv
+      input: experiments/telemetry_50/llava15_earthvqa/labels.jsonl
+      fit_output: experiments/telemetry_50/llava15_earthvqa/derived_72d_k2/fit.csv
+      calibration_output: experiments/telemetry_50/llava15_earthvqa/derived_72d_k2/calibration.csv
+      test_output: experiments/telemetry_50/llava15_earthvqa/derived_72d_k2/test.csv
     llava15_lingoqa:
       model: llava15
       dataset: lingoqa
-      input: artifacts/iclr_v2/llava15_lingoqa/json/labels.jsonl
-      fit_output: artifacts/iclr_v2/llava15_lingoqa/train_data/fit.csv
-      calibration_output: artifacts/iclr_v2/llava15_lingoqa/train_data/calibration.csv
-      test_output: artifacts/iclr_v2/llava15_lingoqa/train_data/test.csv
+      input: experiments/telemetry_50/llava15_lingoqa/labels.jsonl
+      fit_output: experiments/telemetry_50/llava15_lingoqa/derived_72d_k2/fit.csv
+      calibration_output: experiments/telemetry_50/llava15_lingoqa/derived_72d_k2/calibration.csv
+      test_output: experiments/telemetry_50/llava15_lingoqa/derived_72d_k2/test.csv
     llava15_vqav2:
       model: llava15
       dataset: vqav2
-      input: artifacts/iclr_v2/llava15_vqav2/json/labels.jsonl
-      fit_output: artifacts/iclr_v2/llava15_vqav2/train_data/fit.csv
-      calibration_output: artifacts/iclr_v2/llava15_vqav2/train_data/calibration.csv
-      test_output: artifacts/iclr_v2/llava15_vqav2/train_data/test.csv
+      input: experiments/telemetry_50/llava15_vqav2/labels.jsonl
+      fit_output: experiments/telemetry_50/llava15_vqav2/derived_72d_k2/fit.csv
+      calibration_output: experiments/telemetry_50/llava15_vqav2/derived_72d_k2/calibration.csv
+      test_output: experiments/telemetry_50/llava15_vqav2/derived_72d_k2/test.csv
     internvl3_earthvqa:
       model: internvl3
       dataset: earthvqa
-      input: artifacts/iclr_v2/internvl3_earthvqa/json/labels.jsonl
-      fit_output: artifacts/iclr_v2/internvl3_earthvqa/train_data/fit.csv
-      calibration_output: artifacts/iclr_v2/internvl3_earthvqa/train_data/calibration.csv
-      test_output: artifacts/iclr_v2/internvl3_earthvqa/train_data/test.csv
+      input: experiments/telemetry_50/internvl3_earthvqa/labels.jsonl
+      fit_output: experiments/telemetry_50/internvl3_earthvqa/derived_72d_k2/fit.csv
+      calibration_output: experiments/telemetry_50/internvl3_earthvqa/derived_72d_k2/calibration.csv
+      test_output: experiments/telemetry_50/internvl3_earthvqa/derived_72d_k2/test.csv
     internvl3_lingoqa:
       model: internvl3
       dataset: lingoqa
-      input: artifacts/iclr_v2/internvl3_lingoqa/json/labels.jsonl
-      fit_output: artifacts/iclr_v2/internvl3_lingoqa/train_data/fit.csv
-      calibration_output: artifacts/iclr_v2/internvl3_lingoqa/train_data/calibration.csv
-      test_output: artifacts/iclr_v2/internvl3_lingoqa/train_data/test.csv
+      input: experiments/telemetry_50/internvl3_lingoqa/labels.jsonl
+      fit_output: experiments/telemetry_50/internvl3_lingoqa/derived_72d_k2/fit.csv
+      calibration_output: experiments/telemetry_50/internvl3_lingoqa/derived_72d_k2/calibration.csv
+      test_output: experiments/telemetry_50/internvl3_lingoqa/derived_72d_k2/test.csv
     internvl3_vqav2:
       model: internvl3
       dataset: vqav2
-      input: artifacts/iclr_v2/internvl3_vqav2/json/labels.jsonl
-      fit_output: artifacts/iclr_v2/internvl3_vqav2/train_data/fit.csv
-      calibration_output: artifacts/iclr_v2/internvl3_vqav2/train_data/calibration.csv
-      test_output: artifacts/iclr_v2/internvl3_vqav2/train_data/test.csv
+      input: experiments/telemetry_50/internvl3_vqav2/labels.jsonl
+      fit_output: experiments/telemetry_50/internvl3_vqav2/derived_72d_k2/fit.csv
+      calibration_output: experiments/telemetry_50/internvl3_vqav2/derived_72d_k2/calibration.csv
+      test_output: experiments/telemetry_50/internvl3_vqav2/derived_72d_k2/test.csv
 
 detector:
   task: binary_significant_sdc

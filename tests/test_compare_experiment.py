@@ -1,7 +1,9 @@
+import tempfile
 import unittest
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 import torch
 from torch import nn
 
@@ -17,7 +19,10 @@ from compare_experiment import (
     threshold_at_fpr,
 )
 from compare_experiment.config import load_comparison_config
-from compare_experiment.evaluate_results import _per_run_metrics
+from compare_experiment.evaluate_results import (
+    _load_strict_finite_cohort,
+    _per_run_metrics,
+)
 from compare_experiment.evaluation import apply_threshold
 from compare_experiment.profile_baselines import _validate_profile_counts
 
@@ -139,6 +144,25 @@ class DrDNAProfileTest(unittest.TestCase):
 
 
 class EvaluationTest(unittest.TestCase):
+    def test_strict_finite_cohort_requires_every_reference_feature(self):
+        frame = pd.DataFrame(
+            {
+                "sample_uid": ["finite", "partial_nan", "infinite"],
+                "split": ["test", "test", "test"],
+                "feature_a": [1.0, np.nan, np.inf],
+                "feature_b": [2.0, 3.0, 4.0],
+            }
+        )
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "canonical.csv"
+            frame.to_csv(path, index=False)
+
+            uids, metadata = _load_strict_finite_cohort(path)
+
+        self.assertEqual(uids, {"finite"})
+        self.assertEqual(metadata["strict_finite_rows"], 1)
+        self.assertEqual(metadata["excluded_non_finite_rows"], 2)
+
     def test_threshold_respects_false_positive_budget(self):
         calibration = threshold_at_fpr(
             [0.0, 0.1, 0.2, 0.3, 0.4] * 20,
@@ -198,11 +222,11 @@ class ComparisonConfigurationTest(unittest.TestCase):
         root = Path(__file__).resolve().parents[1]
         config = load_comparison_config(
             root
-            / "compare_experiment/configs/detection_comparison.yaml",
+            / "compare_experiment/configs/detection_comparison_k28_36d.yaml",
             repository_root=root,
         )
-        self.assertEqual(config.max_steps, 2)
-        self.assertEqual(config.monitored_layers, (6, 7, 22, 23, 24, 25, 26, 27))
+        self.assertEqual(config.max_steps, 28)
+        self.assertEqual(config.monitored_layers, (6, 7, 24, 25, 26, 27))
         self.assertEqual(config.drdna.cohort_size, 64)
         self.assertEqual(config.drdna.bins, 10)
         self.assertEqual(config.calibration_strategy, "maximize_f1")

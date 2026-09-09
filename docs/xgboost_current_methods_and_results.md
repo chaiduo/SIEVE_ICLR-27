@@ -73,7 +73,7 @@ device: cpu
 ## 6. 输出
 
 ```text
-artifacts/iclr_v2/<job>/output/
+experiments/step_ablation_36d/<job>/k_28/output/
 ├── metrics_summary.json
 ├── significant_sdc_detector.ubj
 ├── significant_sdc_feature_importance.csv

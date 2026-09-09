@@ -169,6 +169,14 @@ def all_feature_nan_mask(
     return prepare_features(frame, feature_columns).isna().all(axis=1)
 
 
+def strict_feature_finite_mask(
+    frame: pd.DataFrame,
+    feature_columns: list[str],
+) -> pd.Series:
+    """Select rows whose complete detector feature vector is finite."""
+    return prepare_features(frame, feature_columns).notna().all(axis=1)
+
+
 def target_counts(values: Any) -> dict[str, Any]:
     target = np.asarray(values, dtype=int)
     total = int(len(target))

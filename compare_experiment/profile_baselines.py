@@ -31,7 +31,7 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=(
             root
-            / "compare_experiment/configs/detection_comparison.yaml"
+            / "compare_experiment/configs/detection_comparison_k28_36d.yaml"
         ),
     )
     parser.add_argument("--device", default="cuda:0")

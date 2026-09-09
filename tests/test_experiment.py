@@ -51,7 +51,7 @@ class ExperimentConfigTest(unittest.TestCase):
 
         self.assertEqual(set(jobs), expected)
         self.assertTrue(
-            all("artifacts/iclr_v2" in str(job.input_path) for job in jobs.values())
+            all("experiments/telemetry_50" in str(job.input_path) for job in jobs.values())
         )
         self.assertTrue(all(job.split_manifest.is_file() for job in jobs.values()))
         self.assertTrue(all(len(job.spec.feature_columns) == 72 for job in jobs.values()))

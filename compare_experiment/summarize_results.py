@@ -48,7 +48,12 @@ def parse_args() -> argparse.Namespace:
         "--comparison-config",
         type=Path,
         default=root
-        / "compare_experiment/configs/detection_comparison.yaml",
+        / "compare_experiment/configs/detection_comparison_k28_36d.yaml",
+    )
+    parser.add_argument(
+        "--evaluation-dir-name",
+        default="evaluation",
+        help="Per-job directory containing metrics.json.",
     )
     parser.add_argument("--output-dir", type=Path, default=None)
     return parser.parse_args()
@@ -65,7 +70,12 @@ def main() -> int:
         job = load_pipeline_job(
             config.source_config, job_name, repository_root=root
         )
-        path = config.results_root / job_name / "evaluation/metrics.json"
+        path = (
+            config.results_root
+            / job_name
+            / args.evaluation_dir_name
+            / "metrics.json"
+        )
         summary = json.loads(path.read_text(encoding="utf-8"))
         for method, method_result in summary["methods"].items():
             for cohort, cohort_result in method_result["cohorts"].items():

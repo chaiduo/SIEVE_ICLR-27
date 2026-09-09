@@ -23,7 +23,7 @@ def parse_args() -> argparse.Namespace:
         "--comparison-config",
         type=Path,
         default=root
-        / "compare_experiment/configs/detection_comparison.yaml",
+        / "compare_experiment/configs/detection_comparison_k28_36d.yaml",
     )
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--max-samples", type=int, default=None)
@@ -32,6 +32,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, default=None)
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--resume-from-run", type=int, default=None)
+    parser.add_argument(
+        "--skip-sieve-telemetry",
+        action="store_true",
+        help="Collect only Ranger/Dr.DNA traces and scores.",
+    )
     return parser.parse_args()
 
 
@@ -82,6 +87,7 @@ def main() -> int:
         telemetry_max_steps=args.telemetry_max_steps,
         auxiliary_monitor_factory=monitor_factory,
         auxiliary_scorer=score,
+        collect_telemetry=not args.skip_sieve_telemetry,
     )
     return 0
 

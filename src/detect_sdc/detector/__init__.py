@@ -11,6 +11,7 @@ from .xgboost import (
     run_detector_job,
     run_calibrated_xgboost,
     significant_sdc_negative_mask,
+    strict_feature_finite_mask,
 )
 
 __all__ = [
@@ -24,4 +25,5 @@ __all__ = [
     "run_detector_job",
     "run_calibrated_xgboost",
     "significant_sdc_negative_mask",
+    "strict_feature_finite_mask",
 ]

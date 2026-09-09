@@ -16,7 +16,9 @@ import xgboost as xgb
 from detect_sdc.detector.xgboost import (
     add_significant_sdc_target,
     calibrate_threshold_max_f1,
+    get_feature_columns,
     prepare_features,
+    strict_feature_finite_mask,
 )
 from detect_sdc.features.jobs import load_feature_job
 from detect_sdc.pipeline.jobs import load_pipeline_job
@@ -40,10 +42,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--comparison-config",
         type=Path,
-        default=root / "compare_experiment/configs/detection_comparison.yaml",
+        default=(
+            root
+            / "compare_experiment/configs/detection_comparison_k28_36d.yaml"
+        ),
     )
     parser.add_argument("--records", type=Path, default=None)
     parser.add_argument("--detector-summary", type=Path, default=None)
+    parser.add_argument("--calibration-features", type=Path, default=None)
+    parser.add_argument("--test-features", type=Path, default=None)
+    parser.add_argument(
+        "--finite-cohort-features",
+        type=Path,
+        required=True,
+        help=(
+            "Canonical Final-Test feature CSV. A row is in the Finite cohort "
+            "only when every reference feature is finite after preprocessing."
+        ),
+    )
     parser.add_argument("--output-dir", type=Path, default=None)
     return parser.parse_args()
 
@@ -72,25 +88,52 @@ def main() -> int:
         or feature_job.fit_output.parent.parent / "output/metrics_summary.json"
     ).resolve()
     output_dir = (args.output_dir or result_root / "evaluation").resolve()
+    calibration_path = (
+        args.calibration_features or feature_job.calibration_output
+    ).resolve()
+    test_path = (args.test_features or feature_job.test_output).resolve()
+    finite_uids, finite_cohort = _load_strict_finite_cohort(
+        args.finite_cohort_features.resolve()
+    )
 
     records = _read_records(records_path)
     detector_summary = json.loads(summary_path.read_text(encoding="utf-8"))
     calibration = _build_rows(
-        pd.read_csv(feature_job.calibration_output),
+        _read_feature_split(calibration_path, "calibration"),
         records,
         detector_summary,
+        finite_uids=finite_uids,
     )
     test = _build_rows(
-        pd.read_csv(feature_job.test_output),
+        _read_feature_split(test_path, "test"),
         records,
         detector_summary,
+        finite_uids=finite_uids,
     )
     calibration_rows = list(calibration)
     calibration_negative_rows = [
         row for row in calibration if not row["is_significant_sdc"]
     ]
     test_rows = list(test)
-    if not calibration_rows or not calibration_negative_rows or not test_rows:
+    finite_rows = [
+        row for row in test_rows if row["is_in_finite_cohort"]
+    ]
+    unmatched_finite_uids = finite_uids - {
+        str(row["sample_uid"]) for row in test_rows
+    }
+    if unmatched_finite_uids:
+        raise ValueError(
+            "Strict Finite cohort contains sample_uids absent from the scored "
+            f"Final Test: {len(unmatched_finite_uids)}"
+        )
+    finite_cohort["scored_test_rows"] = len(test_rows)
+    finite_cohort["selected_rows_present_in_scored_test"] = len(finite_rows)
+    if (
+        not calibration_rows
+        or not calibration_negative_rows
+        or not test_rows
+        or not finite_rows
+    ):
         raise ValueError("Comparison requires calibration and test rows")
 
     summary: dict[str, Any] = {
@@ -98,6 +141,10 @@ def main() -> int:
         "protocol": "significant_sdc_fit_calibration_final_test",
         "records": str(records_path),
         "detector_summary": str(summary_path),
+        "calibration_features": str(calibration_path),
+        "test_features": str(test_path),
+        "finite_cohort_features": str(args.finite_cohort_features.resolve()),
+        "finite_cohort": finite_cohort,
         "calibration_objective": "maximize significant-SDC F1",
         "negative_definition": "significant_sdc_target == 0",
         "calibration_rows": len(calibration_rows),
@@ -121,7 +168,7 @@ def main() -> int:
             ("full", test_rows),
             (
                 "finite_only",
-                [row for row in test_rows if not row["all_feature_nan"]],
+                finite_rows,
             ),
         ):
             detected = apply_threshold(
@@ -216,15 +263,58 @@ def _read_records(path: Path) -> dict[str, dict[str, Any]]:
     return records
 
 
+def _read_feature_split(path: Path, split: str) -> pd.DataFrame:
+    frame = pd.read_csv(path)
+    if "split" in frame.columns:
+        observed = set(frame["split"].dropna().astype(str))
+        if split in observed:
+            frame = frame.loc[frame["split"].astype(str).eq(split)].copy()
+    if frame.empty:
+        raise ValueError(f"No {split} feature rows in {path}")
+    return frame
+
+
+def _load_strict_finite_cohort(path: Path) -> tuple[set[str], dict[str, Any]]:
+    frame = _read_feature_split(path, "test")
+    sample_uids = frame["sample_uid"].astype(str)
+    if sample_uids.duplicated().any():
+        raise ValueError(
+            f"Canonical Finite cohort has duplicate sample_uids: {path}"
+        )
+    feature_columns = get_feature_columns(frame)
+    finite_mask = strict_feature_finite_mask(frame, feature_columns)
+    finite_uids = set(sample_uids.loc[finite_mask])
+    if not finite_uids:
+        raise ValueError(f"Canonical Finite cohort is empty: {path}")
+    return finite_uids, {
+        "definition": (
+            "all final SIEVE reference features are finite after numeric "
+            "coercion; NaN, +/-Inf, and values outside the float32 range "
+            "are excluded"
+        ),
+        "reference_features": str(path),
+        "reference_split": "test",
+        "reference_feature_count": len(feature_columns),
+        "reference_test_rows": int(len(frame)),
+        "strict_finite_rows": int(finite_mask.sum()),
+        "excluded_non_finite_rows": int((~finite_mask).sum()),
+    }
+
+
 def _build_rows(
     feature_frame: pd.DataFrame,
     records: dict[str, dict[str, Any]],
     detector_summary: dict[str, Any],
+    *,
+    finite_uids: set[str],
 ) -> list[dict[str, Any]]:
     frame = add_significant_sdc_target(feature_frame)
     feature_columns = list(detector_summary["feature_columns"])
     prepared_features = prepare_features(frame, feature_columns)
-    all_feature_nan = prepared_features.isna().all(axis=1).to_numpy()
+    is_in_finite_cohort = np.asarray(
+        [str(uid) in finite_uids for uid in frame["sample_uid"]],
+        dtype=bool,
+    )
     booster = xgb.Booster()
     booster.load_model(detector_summary["model_path"])
     sieve_scores = booster.inplace_predict(
@@ -232,10 +322,10 @@ def _build_rows(
         validate_features=False,
     )
     output = []
-    for (_, feature), sieve_score, feature_nan in zip(
+    for (_, feature), sieve_score, finite_cohort_member in zip(
         frame.iterrows(),
         sieve_scores,
-        all_feature_nan,
+        is_in_finite_cohort,
     ):
         uid = str(feature["sample_uid"])
         try:
@@ -258,7 +348,7 @@ def _build_rows(
                 ),
                 "run_index": feature["run_index"],
                 "has_non_finite": bool(record["has_non_finite"]),
-                "all_feature_nan": bool(feature_nan),
+                "is_in_finite_cohort": bool(finite_cohort_member),
                 "ranger_score": float(record["ranger_score"]),
                 "drdna_score": float(record["drdna_score"]),
                 "sieve_score": float(sieve_score),

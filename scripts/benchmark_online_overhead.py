@@ -23,14 +23,74 @@ from detect_sdc.online_monitor import OnlineSieveMonitor
 from detect_sdc.pipeline.injection import load_mapping_model
 from detect_sdc.pipeline.jobs import load_pipeline_job
 
+from compare_experiment.artifacts import load_profiles
+from compare_experiment.config import load_comparison_config
+from compare_experiment.monitor import OnlineActivationMonitor
 
-MODES = ("vanilla", "step_hook", "monitor", "predictor", "sieve")
-PAIRS = ((6, 7), (22, 23), (23, 24), (24, 25), (25, 26), (26, 27))
+
+MODES = (
+    "vanilla",
+    "ranger",
+    "drdna",
+    "step_hook",
+    "monitor",
+    "predictor",
+    "sieve",
+)
 MODEL_INFO = {
     "qwen25_vl": ("Qwen2.5-VL-7B", "Qwen2.5-VL-7B"),
     "internvl3": ("InternVL3-8B", "InternVL3-8B"),
     "llava15": ("LLaVA-1.5-7B", "llava-v1.5-7B"),
 }
+
+
+class ComparisonMethodMonitor:
+    """Time one comparison scorer with the shared activation monitor."""
+
+    def __init__(
+        self,
+        model: Any,
+        *,
+        monitored_layers: tuple[int, ...],
+        max_steps: int,
+        scorer: Any,
+    ) -> None:
+        self.monitor = OnlineActivationMonitor(
+            model,
+            monitored_layers=monitored_layers,
+            max_steps=max_steps,
+        )
+        self.scorer = scorer
+        self.steps_processed = 0
+        self.detection_ready_seconds: float | None = None
+        self.detection_after_prefill_seconds: float | None = None
+        self.detector_probability: float | None = None
+        self.detector_prediction: int | None = None
+        self._sample_start: float | None = None
+
+    def register(self) -> None:
+        self.monitor.register()
+
+    def unregister(self) -> None:
+        self.monitor.unregister()
+
+    def start_sample(self, start_time: float | None = None) -> None:
+        self.monitor.start_sample()
+        self.steps_processed = 0
+        self.detection_ready_seconds = None
+        self.detection_after_prefill_seconds = None
+        self.detector_probability = None
+        self.detector_prediction = None
+        self._sample_start = (
+            time.perf_counter() if start_time is None else float(start_time)
+        )
+
+    def finish_sample(self) -> None:
+        trace = self.monitor.finish_sample()
+        self.steps_processed = self.monitor.steps_processed
+        self.detector_probability = (
+            float("-inf") if not trace.steps else float(self.scorer(trace))
+        )
 
 
 class DetectorAdapter:
@@ -76,10 +136,20 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=root / "configs/experiments/current.yaml",
     )
+    parser.add_argument(
+        "--comparison-config",
+        type=Path,
+        default=(
+            root
+            / "compare_experiment/configs/detection_comparison_k28_36d.yaml"
+        ),
+    )
+    parser.add_argument("--profiles", type=Path, default=None)
+    parser.add_argument("--detector-summary", type=Path, default=None)
     parser.add_argument("--device", default="cuda:0")
     parser.add_argument("--samples", type=int, default=50)
-    parser.add_argument("--warmup-samples", type=int, default=5)
-    parser.add_argument("--repeats", type=int, default=2)
+    parser.add_argument("--warmup-samples", type=int, default=10)
+    parser.add_argument("--repeats", type=int, default=10)
     parser.add_argument("--online-steps", type=int, default=2)
     parser.add_argument(
         "--feature-profile",
@@ -94,7 +164,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--mode-order",
-        choices=("forward", "reverse"),
+        choices=("forward",),
         default="forward",
     )
     parser.add_argument("--output-root", type=Path, default=None)
@@ -385,6 +455,10 @@ def main() -> int:
     args = parse_args()
     root = args.repository_root.resolve()
     config_path = args.config.resolve()
+    comparison_config = load_comparison_config(
+        args.comparison_config.resolve(),
+        repository_root=root,
+    )
     job = load_pipeline_job(
         config_path,
         args.job,
@@ -396,19 +470,44 @@ def main() -> int:
         if args.output_root is not None
         else (
             root
-            / "analysis/iclr_v2/online_overhead"
+            / "experiments/comparison_36d_k28/overhead"
             / args.mode_order
             / job.model_name
         )
+    )
+    detector_summary_path = (
+        args.detector_summary.resolve()
+        if args.detector_summary is not None
+        else job.paths.labeled_output.parent.parent / "output/metrics_summary.json"
     )
     (
         detector,
         detector_columns,
         detector_threshold,
         detector_depth,
-    ) = load_deployed_detector(
-        job.paths.labeled_output.parent.parent / "output/metrics_summary.json"
-    )
+    ) = load_deployed_detector(detector_summary_path)
+
+    range_profile = drdna_profile = None
+    if {"ranger", "drdna"} & set(args.modes):
+        profile_path = (
+            args.profiles.resolve()
+            if args.profiles is not None
+            else comparison_config.results_root / args.job / "profiles.json"
+        )
+        range_profile, drdna_profile, _ = load_profiles(profile_path)
+        if range_profile.monitored_layers != comparison_config.monitored_layers:
+            raise ValueError("Ranger profile monitored layers differ from config")
+        if drdna_profile.monitored_layers != comparison_config.monitored_layers:
+            raise ValueError("Dr.DNA profile monitored layers differ from config")
+        if range_profile.max_steps != args.online_steps:
+            raise ValueError("Ranger profile max_steps differs from online_steps")
+        if drdna_profile.max_steps != args.online_steps:
+            raise ValueError("Dr.DNA profile max_steps differs from online_steps")
+        if args.online_steps != comparison_config.max_steps:
+            raise ValueError(
+                "online_steps must match comparison max_steps when benchmarking "
+                "Ranger/Dr.DNA"
+            )
 
     dataset = load_dataset_adapter(job.dataset_config_path)
     samples = preload_samples(
@@ -442,11 +541,29 @@ def main() -> int:
                 ).to(args.device).eval()
 
             monitor = None
-            if mode != "vanilla":
+            if mode == "ranger":
+                if range_profile is None:
+                    raise RuntimeError("Ranger profile is not loaded")
+                monitor = ComparisonMethodMonitor(
+                    adapter.model,
+                    monitored_layers=comparison_config.monitored_layers,
+                    max_steps=args.online_steps,
+                    scorer=range_profile.score,
+                )
+            elif mode == "drdna":
+                if drdna_profile is None:
+                    raise RuntimeError("Dr.DNA profile is not loaded")
+                monitor = ComparisonMethodMonitor(
+                    adapter.model,
+                    monitored_layers=comparison_config.monitored_layers,
+                    max_steps=args.online_steps,
+                    scorer=drdna_profile.score,
+                )
+            elif mode != "vanilla":
                 monitor = OnlineSieveMonitor(
                     adapter.model,
                     mode=mode,
-                    layer_pairs=PAIRS,
+                    layer_pairs=comparison_config.layer_pairs,
                     projection_dim=job.projection_dim,
                     projection_seed=job.profiler_seed,
                     max_steps=args.online_steps,
@@ -495,11 +612,15 @@ def main() -> int:
                     "feature_profile": args.feature_profile,
                     "detector_depth": detector_depth,
                     "detector_feature_count": len(detector_columns),
+                    "detector_summary": str(detector_summary_path),
+                    "comparison_config": str(args.comparison_config.resolve()),
                     "mode_order": args.mode_order,
                     "configured_modes": selected_modes,
-                    "layer_pairs": PAIRS,
-                    "monitored_layers": sorted(
-                        {layer for pair in PAIRS for layer in pair}
+                    "layer_pairs": [
+                        list(pair) for pair in comparison_config.layer_pairs
+                    ],
+                    "monitored_layers": list(
+                        comparison_config.monitored_layers
                     ),
                     "modes_completed": [
                         candidate
