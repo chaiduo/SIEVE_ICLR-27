@@ -1,0 +1,144 @@
+{
+  "protocol": "36D/K=28 component ablation on the outer-Fit-only nested split used for configuration selection",
+  "representation": {
+    "layer_pairs": [
+      [
+        6,
+        7
+      ],
+      [
+        24,
+        25
+      ],
+      [
+        26,
+        27
+      ]
+    ],
+    "window": "prefix K=28",
+    "metrics": [
+      "cos_sim",
+      "mean_diff",
+      "std_diff",
+      "l2_distance"
+    ],
+    "statistics": [
+      "mean",
+      "max",
+      "min"
+    ]
+  },
+  "nested_split": {
+    "model_fit_pool": 0.7,
+    "threshold_calibration": 0.15,
+    "selection_validation": 0.15,
+    "early_stopping_within_model_fit_pool": 0.15,
+    "seed": 20260907
+  },
+  "forbidden_partitions": [
+    "outer calibration",
+    "outer final test"
+  ],
+  "cohorts": {
+    "full": "all selection-validation executions",
+    "canonical_finite": "selection-validation executions with at least one finite canonical 72D/K=2 feature"
+  },
+  "ablations": [
+    {
+      "name": "full_36d",
+      "ablation_family": "full",
+      "removed_component": null
+    },
+    {
+      "name": "without_pair_6_7",
+      "ablation_family": "layer_pair",
+      "removed_component": "(6,7)"
+    },
+    {
+      "name": "without_pair_24_25",
+      "ablation_family": "layer_pair",
+      "removed_component": "(24,25)"
+    },
+    {
+      "name": "without_pair_26_27",
+      "ablation_family": "layer_pair",
+      "removed_component": "(26,27)"
+    },
+    {
+      "name": "without_cos_sim",
+      "ablation_family": "metric",
+      "removed_component": "cos_sim"
+    },
+    {
+      "name": "without_mean_diff",
+      "ablation_family": "metric",
+      "removed_component": "mean_diff"
+    },
+    {
+      "name": "without_std_diff",
+      "ablation_family": "metric",
+      "removed_component": "std_diff"
+    },
+    {
+      "name": "without_l2_distance",
+      "ablation_family": "metric",
+      "removed_component": "l2_distance"
+    }
+  ],
+  "tasks": [
+    {
+      "job": "qwen25_vl_earthvqa",
+      "model": "qwen25_vl",
+      "dataset": "earthvqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "qwen25_vl_lingoqa",
+      "model": "qwen25_vl",
+      "dataset": "lingoqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "qwen25_vl_vqav2",
+      "model": "qwen25_vl",
+      "dataset": "vqav2",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "llava15_earthvqa",
+      "model": "llava15",
+      "dataset": "earthvqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "llava15_lingoqa",
+      "model": "llava15",
+      "dataset": "lingoqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "llava15_vqav2",
+      "model": "llava15",
+      "dataset": "vqav2",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "internvl3_earthvqa",
+      "model": "internvl3",
+      "dataset": "earthvqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "internvl3_lingoqa",
+      "model": "internvl3",
+      "dataset": "lingoqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "internvl3_vqav2",
+      "model": "internvl3",
+      "dataset": "vqav2",
+      "group_column": "semantic_group_id"
+    }
+  ]
+}

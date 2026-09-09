@@ -1,0 +1,928 @@
+{
+  "task_type": "binary_significant_sdc",
+  "protocol": "fit_calibration_final_test",
+  "input_csvs": {
+    "fit": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/fit.csv",
+    "calibration": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/calibration.csv",
+    "test": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/test.csv"
+  },
+  "group_column": "semantic_group_id",
+  "external_split_group_overlap": 0,
+  "feature_count": 60,
+  "feature_columns": [
+    "cos_sim_mean_p6_7",
+    "cos_sim_max_p6_7",
+    "cos_sim_min_p6_7",
+    "mean_diff_mean_p6_7",
+    "mean_diff_max_p6_7",
+    "mean_diff_min_p6_7",
+    "std_diff_mean_p6_7",
+    "std_diff_max_p6_7",
+    "std_diff_min_p6_7",
+    "cos_sim_mean_p22_23",
+    "cos_sim_max_p22_23",
+    "cos_sim_min_p22_23",
+    "mean_diff_mean_p22_23",
+    "mean_diff_max_p22_23",
+    "mean_diff_min_p22_23",
+    "std_diff_mean_p22_23",
+    "std_diff_max_p22_23",
+    "std_diff_min_p22_23",
+    "cos_sim_mean_p23_24",
+    "cos_sim_max_p23_24",
+    "cos_sim_min_p23_24",
+    "mean_diff_mean_p23_24",
+    "mean_diff_max_p23_24",
+    "mean_diff_min_p23_24",
+    "std_diff_mean_p23_24",
+    "std_diff_max_p23_24",
+    "std_diff_min_p23_24",
+    "cos_sim_mean_p24_25",
+    "cos_sim_max_p24_25",
+    "cos_sim_min_p24_25",
+    "mean_diff_mean_p24_25",
+    "mean_diff_max_p24_25",
+    "mean_diff_min_p24_25",
+    "std_diff_mean_p24_25",
+    "std_diff_max_p24_25",
+    "std_diff_min_p24_25",
+    "cos_sim_mean_p25_26",
+    "cos_sim_max_p25_26",
+    "cos_sim_min_p25_26",
+    "mean_diff_mean_p25_26",
+    "mean_diff_max_p25_26",
+    "mean_diff_min_p25_26",
+    "std_diff_mean_p25_26",
+    "std_diff_max_p25_26",
+    "std_diff_min_p25_26",
+    "l2_distance_mean_p6_7",
+    "l2_distance_max_p6_7",
+    "l2_distance_min_p6_7",
+    "l2_distance_mean_p22_23",
+    "l2_distance_max_p22_23",
+    "l2_distance_min_p22_23",
+    "l2_distance_mean_p23_24",
+    "l2_distance_max_p23_24",
+    "l2_distance_min_p23_24",
+    "l2_distance_mean_p24_25",
+    "l2_distance_max_p24_25",
+    "l2_distance_min_p24_25",
+    "l2_distance_mean_p25_26",
+    "l2_distance_max_p25_26",
+    "l2_distance_min_p25_26"
+  ],
+  "fit_internal_split": {
+    "group_column": "semantic_group_id",
+    "holdout_ratio": 0.15,
+    "random_state": 42,
+    "train_rows": 32631,
+    "holdout_rows": 5769,
+    "train_groups": 1487,
+    "holdout_groups": 263,
+    "group_overlap": 0
+  },
+  "training": {
+    "train_distribution": {
+      "total": 32631,
+      "counts": {
+        "0": 30829,
+        "1": 1802
+      },
+      "rates": {
+        "0": 0.9447764395819925,
+        "1": 0.05522356041800742
+      }
+    },
+    "test_distribution": {
+      "total": 5769,
+      "counts": {
+        "0": 5433,
+        "1": 336
+      },
+      "rates": {
+        "0": 0.9417576703068122,
+        "1": 0.058242329693187725
+      }
+    },
+    "class_weights": {
+      "0": 0.529225729021376,
+      "1": 9.05410654827969
+    },
+    "best_iteration": 500,
+    "best_score": 0.00398682613971226,
+    "parameters": {
+      "learning_rate": 0.01,
+      "n_estimators": 10000,
+      "max_depth": 6,
+      "min_child_weight": 1.0,
+      "subsample": 0.9,
+      "colsample_bytree": 0.9,
+      "early_stopping_rounds": 500,
+      "test_ratio": 0.15,
+      "random_state": 42,
+      "n_jobs": 8,
+      "device": "cpu",
+      "verbose": false
+    }
+  },
+  "threshold_calibration": {
+    "strategy": "maximize_f1",
+    "threshold": 0.8348173499107361,
+    "calibration_precision": 0.9976190476190476,
+    "calibration_recall": 0.9610091743119266,
+    "calibration_f1": 0.9789719626168224,
+    "calibration_fpr": 0.00012822156686754713,
+    "samples": 8235,
+    "positive_samples": 436,
+    "negative_samples": 7799,
+    "predicted_positive": 420,
+    "tie_breaker": "highest_threshold",
+    "comparison": "score > threshold; positive infinity always detected"
+  },
+  "calibration_objective": "maximize significant_sdc_target F1",
+  "calibration_negative_definition": "significant_sdc_target == 0",
+  "target_definition": {
+    "0": "non-significant execution",
+    "1": "pred_answer != clean_answer and significance == 2"
+  },
+  "cohort_rows": {
+    "test_full": 8140,
+    "test_finite": 8140,
+    "test_clean": 750,
+    "test_injected_non_sdc": 5417,
+    "test_slight_sdc": 1597,
+    "test_significant_sdc": 376
+  },
+  "test_all_feature_nan": 0,
+  "metrics": {
+    "test_full": {
+      "confusion_matrix": [
+        [
+          7762,
+          2
+        ],
+        [
+          16,
+          360
+        ]
+      ],
+      "accuracy": 0.9977886977886978,
+      "per_class": {
+        "0": {
+          "name": "non_significant_sdc",
+          "support": 7764,
+          "pred_total": 7778,
+          "tp": 7762,
+          "fp": 16,
+          "fn": 2,
+          "tn": 360,
+          "precision": 0.997942915916688,
+          "recall": 0.9997424008243173,
+          "false_positive_rate": 0.0425531914893617,
+          "f1": 0.9988418478960237,
+          "prob_mean": 0.949902355670929
+        },
+        "1": {
+          "name": "significant_sdc",
+          "support": 376,
+          "pred_total": 362,
+          "tp": 360,
+          "fp": 2,
+          "fn": 16,
+          "tn": 7762,
+          "precision": 0.994475138121547,
+          "recall": 0.9574468085106383,
+          "false_positive_rate": 0.00025759917568263783,
+          "f1": 0.975609756097561,
+          "prob_mean": 0.050097670406103134
+        }
+      },
+      "classification_report": {
+        "non_significant_sdc": {
+          "precision": 0.997942915916688,
+          "recall": 0.9997424008243173,
+          "f1-score": 0.9988418478960237,
+          "support": 7764.0
+        },
+        "significant_sdc": {
+          "precision": 0.994475138121547,
+          "recall": 0.9574468085106383,
+          "f1-score": 0.975609756097561,
+          "support": 376.0
+        },
+        "accuracy": 0.9977886977886978,
+        "macro avg": {
+          "precision": 0.9962090270191175,
+          "recall": 0.9785946046674778,
+          "f1-score": 0.9872258019967923,
+          "support": 8140.0
+        },
+        "weighted avg": {
+          "precision": 0.9977827335517035,
+          "recall": 0.9977886977886978,
+          "f1-score": 0.9977687193313773,
+          "support": 8140.0
+        }
+      },
+      "target_class_1": {
+        "name": "significant_sdc",
+        "support": 376,
+        "pred_total": 362,
+        "tp": 360,
+        "fp": 2,
+        "fn": 16,
+        "tn": 7762,
+        "precision": 0.994475138121547,
+        "recall": 0.9574468085106383,
+        "false_positive_rate": 0.00025759917568263783,
+        "f1": 0.975609756097561,
+        "prob_mean": 0.050097670406103134
+      },
+      "target_significant_sdc": {
+        "name": "significant_sdc",
+        "support": 376,
+        "pred_total": 362,
+        "tp": 360,
+        "fp": 2,
+        "fn": 16,
+        "tn": 7762,
+        "precision": 0.994475138121547,
+        "recall": 0.9574468085106383,
+        "false_positive_rate": 0.00025759917568263783,
+        "f1": 0.975609756097561,
+        "prob_mean": 0.050097670406103134
+      },
+      "macro_precision": 0.9962090270191175,
+      "macro_recall": 0.9785946046674778,
+      "macro_f1": 0.9872258019967923,
+      "weighted_precision": 0.9977827335517035,
+      "weighted_recall": 0.9977886977886978,
+      "weighted_f1": 0.9977687193313773,
+      "prediction_files": {
+        "predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_full_predictions.csv",
+        "wrong_predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_full_wrong_predictions.csv",
+        "wrong_count": 18
+      },
+      "label_significance_counts": {
+        "label=0, significance=0": 6167,
+        "label=1, significance=0": 1500,
+        "label=1, significance=1": 97,
+        "label=2, significance=2": 376
+      },
+      "threshold": 0.8348173499107361
+    },
+    "test_finite": {
+      "confusion_matrix": [
+        [
+          7762,
+          2
+        ],
+        [
+          16,
+          360
+        ]
+      ],
+      "accuracy": 0.9977886977886978,
+      "per_class": {
+        "0": {
+          "name": "non_significant_sdc",
+          "support": 7764,
+          "pred_total": 7778,
+          "tp": 7762,
+          "fp": 16,
+          "fn": 2,
+          "tn": 360,
+          "precision": 0.997942915916688,
+          "recall": 0.9997424008243173,
+          "false_positive_rate": 0.0425531914893617,
+          "f1": 0.9988418478960237,
+          "prob_mean": 0.949902355670929
+        },
+        "1": {
+          "name": "significant_sdc",
+          "support": 376,
+          "pred_total": 362,
+          "tp": 360,
+          "fp": 2,
+          "fn": 16,
+          "tn": 7762,
+          "precision": 0.994475138121547,
+          "recall": 0.9574468085106383,
+          "false_positive_rate": 0.00025759917568263783,
+          "f1": 0.975609756097561,
+          "prob_mean": 0.050097670406103134
+        }
+      },
+      "classification_report": {
+        "non_significant_sdc": {
+          "precision": 0.997942915916688,
+          "recall": 0.9997424008243173,
+          "f1-score": 0.9988418478960237,
+          "support": 7764.0
+        },
+        "significant_sdc": {
+          "precision": 0.994475138121547,
+          "recall": 0.9574468085106383,
+          "f1-score": 0.975609756097561,
+          "support": 376.0
+        },
+        "accuracy": 0.9977886977886978,
+        "macro avg": {
+          "precision": 0.9962090270191175,
+          "recall": 0.9785946046674778,
+          "f1-score": 0.9872258019967923,
+          "support": 8140.0
+        },
+        "weighted avg": {
+          "precision": 0.9977827335517035,
+          "recall": 0.9977886977886978,
+          "f1-score": 0.9977687193313773,
+          "support": 8140.0
+        }
+      },
+      "target_class_1": {
+        "name": "significant_sdc",
+        "support": 376,
+        "pred_total": 362,
+        "tp": 360,
+        "fp": 2,
+        "fn": 16,
+        "tn": 7762,
+        "precision": 0.994475138121547,
+        "recall": 0.9574468085106383,
+        "false_positive_rate": 0.00025759917568263783,
+        "f1": 0.975609756097561,
+        "prob_mean": 0.050097670406103134
+      },
+      "target_significant_sdc": {
+        "name": "significant_sdc",
+        "support": 376,
+        "pred_total": 362,
+        "tp": 360,
+        "fp": 2,
+        "fn": 16,
+        "tn": 7762,
+        "precision": 0.994475138121547,
+        "recall": 0.9574468085106383,
+        "false_positive_rate": 0.00025759917568263783,
+        "f1": 0.975609756097561,
+        "prob_mean": 0.050097670406103134
+      },
+      "macro_precision": 0.9962090270191175,
+      "macro_recall": 0.9785946046674778,
+      "macro_f1": 0.9872258019967923,
+      "weighted_precision": 0.9977827335517035,
+      "weighted_recall": 0.9977886977886978,
+      "weighted_f1": 0.9977687193313773,
+      "prediction_files": {
+        "predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_finite_predictions.csv",
+        "wrong_predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_finite_wrong_predictions.csv",
+        "wrong_count": 18
+      },
+      "label_significance_counts": {
+        "label=0, significance=0": 6167,
+        "label=1, significance=0": 1500,
+        "label=1, significance=1": 97,
+        "label=2, significance=2": 376
+      },
+      "threshold": 0.8348173499107361
+    },
+    "test_clean": {
+      "confusion_matrix": [
+        [
+          750,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "accuracy": 1.0,
+      "per_class": {
+        "0": {
+          "name": "non_significant_sdc",
+          "support": 750,
+          "pred_total": 750,
+          "tp": 750,
+          "fp": 0,
+          "fn": 0,
+          "tn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "false_positive_rate": 0.0,
+          "f1": 1.0,
+          "prob_mean": 0.9945456385612488
+        },
+        "1": {
+          "name": "significant_sdc",
+          "support": 0,
+          "pred_total": 0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 750,
+          "precision": 0.0,
+          "recall": 0.0,
+          "false_positive_rate": 0.0,
+          "f1": 0.0,
+          "prob_mean": 0.005454403348267078
+        }
+      },
+      "classification_report": {
+        "non_significant_sdc": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 750.0
+        },
+        "significant_sdc": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1-score": 0.5,
+          "support": 750.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 750.0
+        }
+      },
+      "target_class_1": {
+        "name": "significant_sdc",
+        "support": 0,
+        "pred_total": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "tn": 750,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_positive_rate": 0.0,
+        "f1": 0.0,
+        "prob_mean": 0.005454403348267078
+      },
+      "target_significant_sdc": {
+        "name": "significant_sdc",
+        "support": 0,
+        "pred_total": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "tn": 750,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_positive_rate": 0.0,
+        "f1": 0.0,
+        "prob_mean": 0.005454403348267078
+      },
+      "macro_precision": 0.5,
+      "macro_recall": 0.5,
+      "macro_f1": 0.5,
+      "weighted_precision": 1.0,
+      "weighted_recall": 1.0,
+      "weighted_f1": 1.0,
+      "prediction_files": {
+        "predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_clean_predictions.csv",
+        "wrong_predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_clean_wrong_predictions.csv",
+        "wrong_count": 0
+      },
+      "label_significance_counts": {
+        "label=0, significance=0": 750
+      },
+      "threshold": 0.8348173499107361
+    },
+    "test_injected_non_sdc": {
+      "confusion_matrix": [
+        [
+          5417,
+          0
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "accuracy": 1.0,
+      "per_class": {
+        "0": {
+          "name": "non_significant_sdc",
+          "support": 5417,
+          "pred_total": 5417,
+          "tp": 5417,
+          "fp": 0,
+          "fn": 0,
+          "tn": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "false_positive_rate": 0.0,
+          "f1": 1.0,
+          "prob_mean": 0.9946470856666565
+        },
+        "1": {
+          "name": "significant_sdc",
+          "support": 0,
+          "pred_total": 0,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0,
+          "tn": 5417,
+          "precision": 0.0,
+          "recall": 0.0,
+          "false_positive_rate": 0.0,
+          "f1": 0.0,
+          "prob_mean": 0.005352990701794624
+        }
+      },
+      "classification_report": {
+        "non_significant_sdc": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 5417.0
+        },
+        "significant_sdc": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0
+        },
+        "accuracy": 1.0,
+        "macro avg": {
+          "precision": 0.5,
+          "recall": 0.5,
+          "f1-score": 0.5,
+          "support": 5417.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1-score": 1.0,
+          "support": 5417.0
+        }
+      },
+      "target_class_1": {
+        "name": "significant_sdc",
+        "support": 0,
+        "pred_total": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "tn": 5417,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_positive_rate": 0.0,
+        "f1": 0.0,
+        "prob_mean": 0.005352990701794624
+      },
+      "target_significant_sdc": {
+        "name": "significant_sdc",
+        "support": 0,
+        "pred_total": 0,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0,
+        "tn": 5417,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_positive_rate": 0.0,
+        "f1": 0.0,
+        "prob_mean": 0.005352990701794624
+      },
+      "macro_precision": 0.5,
+      "macro_recall": 0.5,
+      "macro_f1": 0.5,
+      "weighted_precision": 1.0,
+      "weighted_recall": 1.0,
+      "weighted_f1": 1.0,
+      "prediction_files": {
+        "predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_injected_non_sdc_predictions.csv",
+        "wrong_predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_injected_non_sdc_wrong_predictions.csv",
+        "wrong_count": 0
+      },
+      "label_significance_counts": {
+        "label=0, significance=0": 5417
+      },
+      "threshold": 0.8348173499107361
+    },
+    "test_slight_sdc": {
+      "confusion_matrix": [
+        [
+          1595,
+          2
+        ],
+        [
+          0,
+          0
+        ]
+      ],
+      "accuracy": 0.9987476518472135,
+      "per_class": {
+        "0": {
+          "name": "non_significant_sdc",
+          "support": 1597,
+          "pred_total": 1595,
+          "tp": 1595,
+          "fp": 0,
+          "fn": 2,
+          "tn": 0,
+          "precision": 1.0,
+          "recall": 0.9987476518472135,
+          "false_positive_rate": 0.0,
+          "f1": 0.9993734335839599,
+          "prob_mean": 0.9918254017829895
+        },
+        "1": {
+          "name": "significant_sdc",
+          "support": 0,
+          "pred_total": 2,
+          "tp": 0,
+          "fp": 2,
+          "fn": 0,
+          "tn": 1595,
+          "precision": 0.0,
+          "recall": 0.0,
+          "false_positive_rate": 0.0012523481527864746,
+          "f1": 0.0,
+          "prob_mean": 0.008174652233719826
+        }
+      },
+      "classification_report": {
+        "non_significant_sdc": {
+          "precision": 1.0,
+          "recall": 0.9987476518472135,
+          "f1-score": 0.9993734335839599,
+          "support": 1597.0
+        },
+        "significant_sdc": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0
+        },
+        "accuracy": 0.9987476518472135,
+        "macro avg": {
+          "precision": 0.5,
+          "recall": 0.49937382592360674,
+          "f1-score": 0.49968671679197996,
+          "support": 1597.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 0.9987476518472135,
+          "f1-score": 0.9993734335839599,
+          "support": 1597.0
+        }
+      },
+      "target_class_1": {
+        "name": "significant_sdc",
+        "support": 0,
+        "pred_total": 2,
+        "tp": 0,
+        "fp": 2,
+        "fn": 0,
+        "tn": 1595,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_positive_rate": 0.0012523481527864746,
+        "f1": 0.0,
+        "prob_mean": 0.008174652233719826
+      },
+      "target_significant_sdc": {
+        "name": "significant_sdc",
+        "support": 0,
+        "pred_total": 2,
+        "tp": 0,
+        "fp": 2,
+        "fn": 0,
+        "tn": 1595,
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_positive_rate": 0.0012523481527864746,
+        "f1": 0.0,
+        "prob_mean": 0.008174652233719826
+      },
+      "macro_precision": 0.5,
+      "macro_recall": 0.49937382592360674,
+      "macro_f1": 0.49968671679197996,
+      "weighted_precision": 1.0,
+      "weighted_recall": 0.9987476518472135,
+      "weighted_f1": 0.9993734335839599,
+      "prediction_files": {
+        "predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_slight_sdc_predictions.csv",
+        "wrong_predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_slight_sdc_wrong_predictions.csv",
+        "wrong_count": 2
+      },
+      "label_significance_counts": {
+        "label=1, significance=0": 1500,
+        "label=1, significance=1": 97
+      },
+      "threshold": 0.8348173499107361
+    },
+    "test_significant_sdc": {
+      "confusion_matrix": [
+        [
+          0,
+          0
+        ],
+        [
+          16,
+          360
+        ]
+      ],
+      "accuracy": 0.9574468085106383,
+      "per_class": {
+        "0": {
+          "name": "non_significant_sdc",
+          "support": 0,
+          "pred_total": 16,
+          "tp": 0,
+          "fp": 16,
+          "fn": 0,
+          "tn": 360,
+          "precision": 0.0,
+          "recall": 0.0,
+          "false_positive_rate": 0.0425531914893617,
+          "f1": 0.0,
+          "prob_mean": 0.03815910220146179
+        },
+        "1": {
+          "name": "significant_sdc",
+          "support": 376,
+          "pred_total": 360,
+          "tp": 360,
+          "fp": 0,
+          "fn": 16,
+          "tn": 0,
+          "precision": 1.0,
+          "recall": 0.9574468085106383,
+          "false_positive_rate": 0.0,
+          "f1": 0.9782608695652174,
+          "prob_mean": 0.9618409276008606
+        }
+      },
+      "classification_report": {
+        "non_significant_sdc": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1-score": 0.0,
+          "support": 0.0
+        },
+        "significant_sdc": {
+          "precision": 1.0,
+          "recall": 0.9574468085106383,
+          "f1-score": 0.9782608695652174,
+          "support": 376.0
+        },
+        "accuracy": 0.9574468085106383,
+        "macro avg": {
+          "precision": 0.5,
+          "recall": 0.4787234042553192,
+          "f1-score": 0.4891304347826087,
+          "support": 376.0
+        },
+        "weighted avg": {
+          "precision": 1.0,
+          "recall": 0.9574468085106383,
+          "f1-score": 0.9782608695652174,
+          "support": 376.0
+        }
+      },
+      "target_class_1": {
+        "name": "significant_sdc",
+        "support": 376,
+        "pred_total": 360,
+        "tp": 360,
+        "fp": 0,
+        "fn": 16,
+        "tn": 0,
+        "precision": 1.0,
+        "recall": 0.9574468085106383,
+        "false_positive_rate": 0.0,
+        "f1": 0.9782608695652174,
+        "prob_mean": 0.9618409276008606
+      },
+      "target_significant_sdc": {
+        "name": "significant_sdc",
+        "support": 376,
+        "pred_total": 360,
+        "tp": 360,
+        "fp": 0,
+        "fn": 16,
+        "tn": 0,
+        "precision": 1.0,
+        "recall": 0.9574468085106383,
+        "false_positive_rate": 0.0,
+        "f1": 0.9782608695652174,
+        "prob_mean": 0.9618409276008606
+      },
+      "macro_precision": 0.5,
+      "macro_recall": 0.4787234042553192,
+      "macro_f1": 0.4891304347826087,
+      "weighted_precision": 1.0,
+      "weighted_recall": 0.9574468085106383,
+      "weighted_f1": 0.9782608695652174,
+      "prediction_files": {
+        "predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_significant_sdc_predictions.csv",
+        "wrong_predictions_csv": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_binary_test_significant_sdc_wrong_predictions.csv",
+        "wrong_count": 16
+      },
+      "label_significance_counts": {
+        "label=2, significance=2": 376
+      },
+      "threshold": 0.8348173499107361
+    }
+  },
+  "model_path": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_60d/internvl3_earthvqa/k_4/output/significant_sdc_detector.ubj",
+  "inference_tree_count": 501,
+  "feature_importance_top20": [
+    {
+      "feature": "cos_sim_mean_p24_25",
+      "importance": 2476.5185546875
+    },
+    {
+      "feature": "cos_sim_max_p6_7",
+      "importance": 1861.2374267578125
+    },
+    {
+      "feature": "cos_sim_mean_p6_7",
+      "importance": 1368.6614990234375
+    },
+    {
+      "feature": "cos_sim_max_p25_26",
+      "importance": 1300.9423828125
+    },
+    {
+      "feature": "cos_sim_mean_p25_26",
+      "importance": 1033.8463134765625
+    },
+    {
+      "feature": "cos_sim_max_p24_25",
+      "importance": 549.3489379882812
+    },
+    {
+      "feature": "l2_distance_mean_p25_26",
+      "importance": 241.62255859375
+    },
+    {
+      "feature": "l2_distance_min_p24_25",
+      "importance": 63.093807220458984
+    },
+    {
+      "feature": "cos_sim_max_p23_24",
+      "importance": 58.747352600097656
+    },
+    {
+      "feature": "mean_diff_max_p6_7",
+      "importance": 28.71466827392578
+    },
+    {
+      "feature": "std_diff_min_p24_25",
+      "importance": 27.65393829345703
+    },
+    {
+      "feature": "std_diff_min_p25_26",
+      "importance": 27.196577072143555
+    },
+    {
+      "feature": "std_diff_mean_p6_7",
+      "importance": 23.966983795166016
+    },
+    {
+      "feature": "cos_sim_min_p6_7",
+      "importance": 21.462669372558594
+    },
+    {
+      "feature": "l2_distance_min_p22_23",
+      "importance": 20.87082862854004
+    },
+    {
+      "feature": "cos_sim_mean_p23_24",
+      "importance": 19.97928810119629
+    },
+    {
+      "feature": "std_diff_max_p6_7",
+      "importance": 19.710689544677734
+    },
+    {
+      "feature": "mean_diff_mean_p24_25",
+      "importance": 18.637453079223633
+    },
+    {
+      "feature": "l2_distance_min_p25_26",
+      "importance": 17.548828125
+    },
+    {
+      "feature": "cos_sim_min_p24_25",
+      "importance": 17.22433853149414
+    }
+  ]
+}

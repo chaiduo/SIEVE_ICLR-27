@@ -1,0 +1,211 @@
+{
+  "protocol": {
+    "configuration": "all adjacent pairs, all observed steps (up to 50)",
+    "source": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50",
+    "split": "Calibration only",
+    "injected_only": true,
+    "groups": {
+      "non_sdc": "injected=1 and is_sdc=0",
+      "non_significant_sdc": "injected=1, is_sdc=1, significance in {0,1}",
+      "significant_sdc": "injected=1, is_sdc=1, significance=2"
+    },
+    "sample_feature": "mean finite metric over all observed steps",
+    "metrics": {
+      "cos_sim": "cos_sim",
+      "abs_mean_diff": "abs(mean_diff)",
+      "abs_std_diff": "abs(std_diff)",
+      "l2_distance": "l2_distance"
+    },
+    "non_finite_policy": "exclude per pair and report rate",
+    "bootstrap_unit": "semantic_group_id",
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260907,
+    "main_figure_dataset": "LingoQA",
+    "main_figure_size_inches": [
+      6.75,
+      2.25
+    ]
+  },
+  "jobs": [
+    {
+      "job": "qwen25_vl_earthvqa",
+      "model": "Qwen2.5-VL-7B",
+      "dataset": "EarthVQA",
+      "source": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50/qwen25_vl_earthvqa/labels.jsonl",
+      "source_sha256": "78f0da99d888e956e7da94fdc9562e0b473fdd43041fcfaef717aa84d342f84c",
+      "rows_read": 55000,
+      "calibration_rows": 8250,
+      "injected_rows": 7500,
+      "invalid_label_rows": 13,
+      "missing_telemetry_rows": 38,
+      "class_counts": {
+        "non_sdc": 5540,
+        "non_significant_sdc": 1723,
+        "significant_sdc": 224
+      },
+      "adjacent_pairs": 27,
+      "minimum_observed_steps": 2,
+      "maximum_observed_steps": 49
+    },
+    {
+      "job": "qwen25_vl_lingoqa",
+      "model": "Qwen2.5-VL-7B",
+      "dataset": "LingoQA",
+      "source": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50/qwen25_vl_lingoqa/labels.jsonl",
+      "source_sha256": "9a05484d9f00b08761aa7cf7b64d3c27991564a094be018c841889018bbe11c1",
+      "rows_read": 55000,
+      "calibration_rows": 8250,
+      "injected_rows": 7500,
+      "invalid_label_rows": 3,
+      "missing_telemetry_rows": 44,
+      "class_counts": {
+        "non_sdc": 5906,
+        "non_significant_sdc": 1327,
+        "significant_sdc": 264
+      },
+      "adjacent_pairs": 27,
+      "minimum_observed_steps": 5,
+      "maximum_observed_steps": 49
+    },
+    {
+      "job": "qwen25_vl_vqav2",
+      "model": "Qwen2.5-VL-7B",
+      "dataset": "VQAv2",
+      "source": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50/qwen25_vl_vqav2/labels.jsonl",
+      "source_sha256": "d12da21e963dab1b156d01d26a56288700ef34a6dfd824144aa2b2a2270c4377",
+      "rows_read": 55000,
+      "calibration_rows": 8250,
+      "injected_rows": 7500,
+      "invalid_label_rows": 0,
+      "missing_telemetry_rows": 57,
+      "class_counts": {
+        "non_sdc": 6331,
+        "non_significant_sdc": 911,
+        "significant_sdc": 258
+      },
+      "adjacent_pairs": 27,
+      "minimum_observed_steps": 1,
+      "maximum_observed_steps": 49
+    },
+    {
+      "job": "internvl3_earthvqa",
+      "model": "InternVL3-8B",
+      "dataset": "EarthVQA",
+      "source": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50/internvl3_earthvqa/labels.jsonl",
+      "source_sha256": "d16da79d8b94a2aeab751f02179ebb40812a78836ec67ed88a17ba1e786a96c3",
+      "rows_read": 55000,
+      "calibration_rows": 8250,
+      "injected_rows": 7500,
+      "invalid_label_rows": 15,
+      "missing_telemetry_rows": 14,
+      "class_counts": {
+        "non_sdc": 5364,
+        "non_significant_sdc": 1685,
+        "significant_sdc": 436
+      },
+      "adjacent_pairs": 27,
+      "minimum_observed_steps": 1,
+      "maximum_observed_steps": 49
+    },
+    {
+      "job": "internvl3_lingoqa",
+      "model": "InternVL3-8B",
+      "dataset": "LingoQA",
+      "source": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50/internvl3_lingoqa/labels.jsonl",
+      "source_sha256": "a95a22138ae3b3d6c983b8680d2815c7e9e29ddf76576442ce07877a040bca8d",
+      "rows_read": 55000,
+      "calibration_rows": 8250,
+      "injected_rows": 7500,
+      "invalid_label_rows": 12,
+      "missing_telemetry_rows": 7,
+      "class_counts": {
+        "non_sdc": 5762,
+        "non_significant_sdc": 1293,
+        "significant_sdc": 433
+      },
+      "adjacent_pairs": 27,
+      "minimum_observed_steps": 5,
+      "maximum_observed_steps": 49
+    },
+    {
+      "job": "internvl3_vqav2",
+      "model": "InternVL3-8B",
+      "dataset": "VQAv2",
+      "source": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50/internvl3_vqav2/labels.jsonl",
+      "source_sha256": "7fbee42739a280fa18b6157fa21c10b43e3e8d489398aab78c7e6754ccca3c73",
+      "rows_read": 55000,
+      "calibration_rows": 8250,
+      "injected_rows": 7500,
+      "invalid_label_rows": 10,
+      "missing_telemetry_rows": 11,
+      "class_counts": {
+        "non_sdc": 5786,
+        "non_significant_sdc": 1239,
+        "significant_sdc": 465
+      },
+      "adjacent_pairs": 27,
+      "minimum_observed_steps": 1,
+      "maximum_observed_steps": 49
+    },
+    {
+      "job": "llava15_earthvqa",
+      "model": "LLaVA-1.5-7B",
+      "dataset": "EarthVQA",
+      "source": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50/llava15_earthvqa/labels.jsonl",
+      "source_sha256": "c4c31130bf766a8fdfbe0fdd97ae3f70b5f4eed9b63f06a493cac883208dc4bf",
+      "rows_read": 55000,
+      "calibration_rows": 8250,
+      "injected_rows": 7500,
+      "invalid_label_rows": 0,
+      "missing_telemetry_rows": 110,
+      "class_counts": {
+        "non_sdc": 7249,
+        "non_significant_sdc": 68,
+        "significant_sdc": 183
+      },
+      "adjacent_pairs": 31,
+      "minimum_observed_steps": 1,
+      "maximum_observed_steps": 49
+    },
+    {
+      "job": "llava15_lingoqa",
+      "model": "LLaVA-1.5-7B",
+      "dataset": "LingoQA",
+      "source": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50/llava15_lingoqa/labels.jsonl",
+      "source_sha256": "920ce56a4ca1ad43c9e4625d0dab0ab3ae906bc2c79b2864e64cbacfe2d654ff",
+      "rows_read": 55000,
+      "calibration_rows": 8250,
+      "injected_rows": 7500,
+      "invalid_label_rows": 0,
+      "missing_telemetry_rows": 107,
+      "class_counts": {
+        "non_sdc": 7232,
+        "non_significant_sdc": 102,
+        "significant_sdc": 166
+      },
+      "adjacent_pairs": 31,
+      "minimum_observed_steps": 1,
+      "maximum_observed_steps": 49
+    },
+    {
+      "job": "llava15_vqav2",
+      "model": "LLaVA-1.5-7B",
+      "dataset": "VQAv2",
+      "source": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50/llava15_vqav2/labels.jsonl",
+      "source_sha256": "dff3d954d95017907deb84e3628d7977c5d921d3c6f6df76bd963d085e2f825e",
+      "rows_read": 55000,
+      "calibration_rows": 8250,
+      "injected_rows": 7500,
+      "invalid_label_rows": 0,
+      "missing_telemetry_rows": 111,
+      "class_counts": {
+        "non_sdc": 7304,
+        "non_significant_sdc": 14,
+        "significant_sdc": 182
+      },
+      "adjacent_pairs": 31,
+      "minimum_observed_steps": 1,
+      "maximum_observed_steps": 49
+    }
+  ]
+}

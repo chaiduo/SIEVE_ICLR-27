@@ -1,0 +1,404 @@
+{
+  "protocol": {
+    "dataset": "LingoQA",
+    "gpu": "NVIDIA H20",
+    "batch_size": 1,
+    "max_new_tokens": 50,
+    "samples_per_model": 50,
+    "repeats_per_order": 2,
+    "orders": [
+      "forward",
+      "reverse"
+    ],
+    "observations_per_model_mode": 200,
+    "warmup_samples": 5,
+    "online_steps": 4,
+    "modes": [
+      "vanilla",
+      "ranger",
+      "drdna",
+      "sieve"
+    ],
+    "monitored_layers": [
+      6,
+      7,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260814,
+    "memory_note": "Peak-memory deltas use the forward order because the reverse order loads the predictor before Vanilla."
+  },
+  "aggregate": {
+    "model_count": 3,
+    "mean_end_to_end_overhead_percent": 3.2226949835969667,
+    "mean_throughput_change_percent": -3.102454752349645,
+    "by_mode": {
+      "vanilla": {
+        "model_count": 3,
+        "mean_latency_overhead_percent": 0.0,
+        "mean_throughput_change_percent": 0.0,
+        "mean_extra_peak_allocated_mb": 0.0
+      },
+      "ranger": {
+        "model_count": 3,
+        "mean_latency_overhead_percent": 1.516328628649884,
+        "mean_throughput_change_percent": -1.485797294687848,
+        "mean_extra_peak_allocated_mb": 0.0
+      },
+      "drdna": {
+        "model_count": 3,
+        "mean_latency_overhead_percent": 2.4349665634356845,
+        "mean_throughput_change_percent": -2.370006541009991,
+        "mean_extra_peak_allocated_mb": 0.0
+      },
+      "sieve": {
+        "model_count": 3,
+        "mean_latency_overhead_percent": 3.2226949835969667,
+        "mean_throughput_change_percent": -3.102454752349645,
+        "mean_extra_peak_allocated_mb": 1.8180338541666667
+      }
+    }
+  },
+  "deployment": [
+    {
+      "model": "Qwen2.5-VL-7B",
+      "vanilla_latency_mean_ms": 775.0233416818082,
+      "sieve_latency_mean_ms": 800.4565583541989,
+      "end_to_end_overhead_percent": 3.2816065406753303,
+      "overhead_ci95_low_percent": 3.0907205835311564,
+      "overhead_ci95_high_percent": 3.473970168044956,
+      "throughput_change_percent": -3.1773387833417766,
+      "detection_ready_mean_ms": 501.4720877376385,
+      "detection_ready_p95_ms": 508.46370614599437,
+      "detection_after_prefill_mean_ms": 241.35179258417338,
+      "detection_after_prefill_p95_ms": 245.85098028182983,
+      "extra_peak_allocated_mb": 1.4375,
+      "steps_processed": "{\"4\": 200}"
+    },
+    {
+      "model": "InternVL3-8B",
+      "vanilla_latency_mean_ms": 995.2027544751763,
+      "sieve_latency_mean_ms": 1009.0923962392844,
+      "end_to_end_overhead_percent": 1.3956594976902714,
+      "overhead_ci95_low_percent": 1.2924166659341392,
+      "overhead_ci95_high_percent": 1.504252865103054,
+      "throughput_change_percent": -1.376448957089793,
+      "detection_ready_mean_ms": 480.4744698223658,
+      "detection_ready_p95_ms": 485.0929219741374,
+      "detection_after_prefill_mean_ms": 152.7660366613418,
+      "detection_after_prefill_p95_ms": 157.06359543837607,
+      "extra_peak_allocated_mb": 1.4375,
+      "steps_processed": "{\"4\": 200}"
+    },
+    {
+      "model": "LLaVA-1.5-7B",
+      "vanilla_latency_mean_ms": 360.70060623576865,
+      "sieve_latency_mean_ms": 378.7025203090161,
+      "end_to_end_overhead_percent": 4.990818912425299,
+      "overhead_ci95_low_percent": 4.648061344393192,
+      "overhead_ci95_high_percent": 5.347840835082371,
+      "throughput_change_percent": -4.753576516617364,
+      "detection_ready_mean_ms": 289.4113097433001,
+      "detection_ready_p95_ms": 354.0418687509373,
+      "detection_after_prefill_mean_ms": 160.58016004040837,
+      "detection_after_prefill_p95_ms": 222.46109265834093,
+      "extra_peak_allocated_mb": 2.5791015625,
+      "steps_processed": "{\"1\": 40, \"2\": 80, \"4\": 80}"
+    }
+  ],
+  "components": [
+    {
+      "model_key": "qwen25_vl",
+      "model": "Qwen2.5-VL-7B",
+      "mode": "vanilla",
+      "mode_name": "Vanilla",
+      "observations": 200,
+      "latency_mean_ms": 775.0233416818082,
+      "latency_p50_ms": 730.3346693515778,
+      "latency_p95_ms": 974.0828138077632,
+      "latency_overhead_percent": 0.0,
+      "overhead_ci95_low_percent": null,
+      "overhead_ci95_high_percent": null,
+      "tokens_per_second": 18.193000444867714,
+      "throughput_change_percent": 0.0,
+      "extra_peak_allocated_mb": 0.0,
+      "answer_match_rate": 1.0,
+      "detection_ready": null,
+      "detection_after_prefill": null,
+      "steps_processed": {}
+    },
+    {
+      "model_key": "qwen25_vl",
+      "model": "Qwen2.5-VL-7B",
+      "mode": "ranger",
+      "mode_name": "Ranger-style",
+      "observations": 200,
+      "latency_mean_ms": 789.7707141702995,
+      "latency_p50_ms": 750.185827491805,
+      "latency_p95_ms": 1004.8767240718004,
+      "latency_overhead_percent": 1.9028294627216447,
+      "overhead_ci95_low_percent": 1.4974825682249122,
+      "overhead_ci95_high_percent": 2.3876788352198455,
+      "tokens_per_second": 17.8532829174514,
+      "throughput_change_percent": -1.8672979668515888,
+      "extra_peak_allocated_mb": 0.0,
+      "answer_match_rate": 1.0,
+      "detection_ready": null,
+      "detection_after_prefill": null,
+      "steps_processed": {
+        "4": 200
+      }
+    },
+    {
+      "model_key": "qwen25_vl",
+      "model": "Qwen2.5-VL-7B",
+      "mode": "drdna",
+      "mode_name": "Dr.DNA-style",
+      "observations": 200,
+      "latency_mean_ms": 796.7792528844438,
+      "latency_p50_ms": 748.6858984921128,
+      "latency_p95_ms": 1007.7741092536598,
+      "latency_overhead_percent": 2.8071298027521507,
+      "overhead_ci95_low_percent": 2.556224048476403,
+      "overhead_ci95_high_percent": 3.1311165662775777,
+      "tokens_per_second": 17.69624390815421,
+      "throughput_change_percent": -2.730481638907678,
+      "extra_peak_allocated_mb": 0.0,
+      "answer_match_rate": 1.0,
+      "detection_ready": null,
+      "detection_after_prefill": null,
+      "steps_processed": {
+        "4": 200
+      }
+    },
+    {
+      "model_key": "qwen25_vl",
+      "model": "Qwen2.5-VL-7B",
+      "mode": "sieve",
+      "mode_name": "Full SIEVE",
+      "observations": 200,
+      "latency_mean_ms": 800.4565583541989,
+      "latency_p50_ms": 756.0992785729468,
+      "latency_p95_ms": 1014.0320115955546,
+      "latency_overhead_percent": 3.2816065406753303,
+      "overhead_ci95_low_percent": 3.0907205835311564,
+      "overhead_ci95_high_percent": 3.473970168044956,
+      "tokens_per_second": 17.61494718587939,
+      "throughput_change_percent": -3.1773387833417766,
+      "extra_peak_allocated_mb": 1.4375,
+      "answer_match_rate": 1.0,
+      "detection_ready": {
+        "mean_ms": 501.4720877376385,
+        "p50_ms": 502.4067878257483,
+        "p95_ms": 508.46370614599437
+      },
+      "detection_after_prefill": {
+        "mean_ms": 241.35179258417338,
+        "p50_ms": 241.44787900149822,
+        "p95_ms": 245.85098028182983
+      },
+      "steps_processed": {
+        "4": 200
+      }
+    },
+    {
+      "model_key": "internvl3",
+      "model": "InternVL3-8B",
+      "mode": "vanilla",
+      "mode_name": "Vanilla",
+      "observations": 200,
+      "latency_mean_ms": 995.2027544751763,
+      "latency_p50_ms": 955.2708545234054,
+      "latency_p95_ms": 1426.1565543711185,
+      "latency_overhead_percent": 0.0,
+      "overhead_ci95_low_percent": null,
+      "overhead_ci95_high_percent": null,
+      "tokens_per_second": 20.17679303006879,
+      "throughput_change_percent": 0.0,
+      "extra_peak_allocated_mb": 0.0,
+      "answer_match_rate": 1.0,
+      "detection_ready": null,
+      "detection_after_prefill": null,
+      "steps_processed": {}
+    },
+    {
+      "model_key": "internvl3",
+      "model": "InternVL3-8B",
+      "mode": "ranger",
+      "mode_name": "Ranger-style",
+      "observations": 200,
+      "latency_mean_ms": 997.8445066814311,
+      "latency_p50_ms": 953.0837077181786,
+      "latency_p95_ms": 1428.1765484251082,
+      "latency_overhead_percent": 0.2654486429398917,
+      "overhead_ci95_low_percent": 0.17426636530437967,
+      "overhead_ci95_high_percent": 0.3582605935933003,
+      "tokens_per_second": 20.123375802088454,
+      "throughput_change_percent": -0.2647458785979051,
+      "extra_peak_allocated_mb": 0.0,
+      "answer_match_rate": 1.0,
+      "detection_ready": null,
+      "detection_after_prefill": null,
+      "steps_processed": {
+        "4": 200
+      }
+    },
+    {
+      "model_key": "internvl3",
+      "model": "InternVL3-8B",
+      "mode": "drdna",
+      "mode_name": "Dr.DNA-style",
+      "observations": 200,
+      "latency_mean_ms": 1007.4744502664544,
+      "latency_p50_ms": 963.5561411269009,
+      "latency_p95_ms": 1444.1189941717312,
+      "latency_overhead_percent": 1.2330849905805907,
+      "overhead_ci95_low_percent": 1.1363262337731328,
+      "overhead_ci95_high_percent": 1.330911961595163,
+      "tokens_per_second": 19.931026533416595,
+      "throughput_change_percent": -1.2180652112847579,
+      "extra_peak_allocated_mb": 0.0,
+      "answer_match_rate": 1.0,
+      "detection_ready": null,
+      "detection_after_prefill": null,
+      "steps_processed": {
+        "4": 200
+      }
+    },
+    {
+      "model_key": "internvl3",
+      "model": "InternVL3-8B",
+      "mode": "sieve",
+      "mode_name": "Full SIEVE",
+      "observations": 200,
+      "latency_mean_ms": 1009.0923962392844,
+      "latency_p50_ms": 971.2349120527506,
+      "latency_p95_ms": 1435.473016812466,
+      "latency_overhead_percent": 1.3956594976902714,
+      "overhead_ci95_low_percent": 1.2924166659341392,
+      "overhead_ci95_high_percent": 1.504252865103054,
+      "tokens_per_second": 19.89906977283224,
+      "throughput_change_percent": -1.376448957089793,
+      "extra_peak_allocated_mb": 1.4375,
+      "answer_match_rate": 1.0,
+      "detection_ready": {
+        "mean_ms": 480.4744698223658,
+        "p50_ms": 479.5615132898092,
+        "p95_ms": 485.0929219741374
+      },
+      "detection_after_prefill": {
+        "mean_ms": 152.7660366613418,
+        "p50_ms": 152.3679867386818,
+        "p95_ms": 157.06359543837607
+      },
+      "steps_processed": {
+        "4": 200
+      }
+    },
+    {
+      "model_key": "llava15",
+      "model": "LLaVA-1.5-7B",
+      "mode": "vanilla",
+      "mode_name": "Vanilla",
+      "observations": 200,
+      "latency_mean_ms": 360.70060623576865,
+      "latency_p50_ms": 251.44624942913651,
+      "latency_p95_ms": 711.1848785309121,
+      "latency_overhead_percent": 0.0,
+      "overhead_ci95_low_percent": null,
+      "overhead_ci95_high_percent": null,
+      "tokens_per_second": 14.250045359336841,
+      "throughput_change_percent": 0.0,
+      "extra_peak_allocated_mb": 0.0,
+      "answer_match_rate": 1.0,
+      "detection_ready": null,
+      "detection_after_prefill": null,
+      "steps_processed": {}
+    },
+    {
+      "model_key": "llava15",
+      "model": "LLaVA-1.5-7B",
+      "mode": "ranger",
+      "mode_name": "Ranger-style",
+      "observations": 200,
+      "latency_mean_ms": 369.28783363197,
+      "latency_p50_ms": 253.73436138033867,
+      "latency_p95_ms": 711.5535132121295,
+      "latency_overhead_percent": 2.380707780288116,
+      "overhead_ci95_low_percent": 2.108427388520402,
+      "overhead_ci95_high_percent": 2.666802387832547,
+      "tokens_per_second": 13.91868220907189,
+      "throughput_change_percent": -2.32534803861405,
+      "extra_peak_allocated_mb": 0.0,
+      "answer_match_rate": 1.0,
+      "detection_ready": null,
+      "detection_after_prefill": null,
+      "steps_processed": {
+        "1": 40,
+        "2": 80,
+        "4": 80
+      }
+    },
+    {
+      "model_key": "llava15",
+      "model": "LLaVA-1.5-7B",
+      "mode": "drdna",
+      "mode_name": "Dr.DNA-style",
+      "observations": 200,
+      "latency_mean_ms": 372.4763444508426,
+      "latency_p50_ms": 257.6909076888114,
+      "latency_p95_ms": 721.1382578825578,
+      "latency_overhead_percent": 3.2646848969743125,
+      "overhead_ci95_low_percent": 3.0307854011191164,
+      "overhead_ci95_high_percent": 3.515255491455413,
+      "tokens_per_second": 13.799534055184408,
+      "throughput_change_percent": -3.161472772837537,
+      "extra_peak_allocated_mb": 0.0,
+      "answer_match_rate": 1.0,
+      "detection_ready": null,
+      "detection_after_prefill": null,
+      "steps_processed": {
+        "1": 40,
+        "2": 80,
+        "4": 80
+      }
+    },
+    {
+      "model_key": "llava15",
+      "model": "LLaVA-1.5-7B",
+      "mode": "sieve",
+      "mode_name": "Full SIEVE",
+      "observations": 200,
+      "latency_mean_ms": 378.7025203090161,
+      "latency_p50_ms": 262.69545988179743,
+      "latency_p95_ms": 728.9997605839744,
+      "latency_overhead_percent": 4.990818912425299,
+      "overhead_ci95_low_percent": 4.648061344393192,
+      "overhead_ci95_high_percent": 5.347840835082371,
+      "tokens_per_second": 13.572658549528082,
+      "throughput_change_percent": -4.753576516617364,
+      "extra_peak_allocated_mb": 2.5791015625,
+      "answer_match_rate": 1.0,
+      "detection_ready": {
+        "mean_ms": 289.4113097433001,
+        "p50_ms": 262.61374400928617,
+        "p95_ms": 354.0418687509373
+      },
+      "detection_after_prefill": {
+        "mean_ms": 160.58016004040837,
+        "p50_ms": 134.0618534013629,
+        "p95_ms": 222.46109265834093
+      },
+      "steps_processed": {
+        "1": 40,
+        "2": 80,
+        "4": 80
+      }
+    }
+  ]
+}

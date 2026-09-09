@@ -1,0 +1,23 @@
+{
+  "status": "matched",
+  "rows": 55000,
+  "candidate": "/data01/cd_workspace/Detect_SDC/experiments/comparison_72d_k4/results/qwen25_vl_vqav2/score_records.jsonl",
+  "reference": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50/qwen25_vl_vqav2/labels.jsonl",
+  "matched_fields": [
+    "sample_uid",
+    "orig_id",
+    "semantic_group_id",
+    "split",
+    "run_index",
+    "injected",
+    "clean_answer",
+    "pred_answer",
+    "fault"
+  ],
+  "required_score_fields": [
+    "ranger_score",
+    "drdna_score",
+    "has_non_finite",
+    "steps_observed"
+  ]
+}

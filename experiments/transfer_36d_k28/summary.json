@@ -1,0 +1,139 @@
+{
+  "protocol": {
+    "source": "frozen 36D/K=28 detector and threshold selected on the source Fit/Calibration partitions",
+    "target": "target's own clean-trained Mapping materializes Final Test features; no target Fit/Calibration fault labels are read",
+    "evaluation": "target Final Test fault labels are used only after frozen prediction for offline scoring",
+    "strict_finite": "all 36 target Final Test features finite after numeric cleaning; NaN, +/-Inf, and values beyond float32 range excluded"
+  },
+  "feature_count": 36,
+  "window_k": 28,
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20260907,
+  "sources": [
+    "qwen25_vl_earthvqa",
+    "qwen25_vl_lingoqa",
+    "qwen25_vl_vqav2",
+    "llava15_earthvqa",
+    "llava15_lingoqa",
+    "llava15_vqav2",
+    "internvl3_earthvqa",
+    "internvl3_lingoqa",
+    "internvl3_vqav2"
+  ],
+  "targets": [
+    "qwen25_vl_earthvqa",
+    "qwen25_vl_lingoqa",
+    "qwen25_vl_vqav2",
+    "llava15_earthvqa",
+    "llava15_lingoqa",
+    "llava15_vqav2",
+    "internvl3_earthvqa",
+    "internvl3_lingoqa",
+    "internvl3_vqav2"
+  ],
+  "full_cell_count": 81,
+  "scored_rows": 671274,
+  "off_diagonal_full_macro": {
+    "precision": 0.8253774841198253,
+    "recall": 0.7827746145169541,
+    "f1": 0.7346129792095627,
+    "false_positive_rate": 0.03972392417618272
+  },
+  "off_diagonal_strict_finite_macro": {
+    "precision": 0.5202192126275043,
+    "recall": 0.34661988070050387,
+    "f1": 0.2891205810573156,
+    "false_positive_rate": 0.03972392417618272
+  },
+  "diagonal_validated_sources": [
+    "internvl3_earthvqa",
+    "internvl3_lingoqa",
+    "internvl3_vqav2",
+    "llava15_earthvqa",
+    "llava15_lingoqa",
+    "llava15_vqav2",
+    "qwen25_vl_earthvqa",
+    "qwen25_vl_lingoqa",
+    "qwen25_vl_vqav2"
+  ],
+  "relationship_summary": [
+    {
+      "cohort": "full",
+      "relationship": "cross_model_cross_dataset",
+      "cells": 36,
+      "precision": 0.8407058658707435,
+      "recall": 0.7566089355681295,
+      "f1": 0.7252821249729644,
+      "false_positive_rate": 0.03447414795584028
+    },
+    {
+      "cohort": "full",
+      "relationship": "cross_model_same_dataset",
+      "cells": 18,
+      "precision": 0.9005600647612229,
+      "recall": 0.7264488912433662,
+      "f1": 0.75239718027494,
+      "false_positive_rate": 0.03187467417138236
+    },
+    {
+      "cohort": "full",
+      "relationship": "in_domain",
+      "cells": 9,
+      "precision": 0.9637994989844062,
+      "recall": 0.9148516576239805,
+      "f1": 0.9378380066098408,
+      "false_positive_rate": 0.0010671502371497105
+    },
+    {
+      "cohort": "full",
+      "relationship": "same_model_cross_dataset",
+      "cells": 18,
+      "precision": 0.7195381399765917,
+      "recall": 0.8914316956881915,
+      "f1": 0.7354904866173819,
+      "false_positive_rate": 0.05807272662166793
+    },
+    {
+      "cohort": "strict_finite",
+      "relationship": "cross_model_cross_dataset",
+      "cells": 36,
+      "precision": 0.4815867007885993,
+      "recall": 0.295150777650854,
+      "f1": 0.24350404578750698,
+      "false_positive_rate": 0.03447414795584028
+    },
+    {
+      "cohort": "strict_finite",
+      "relationship": "cross_model_same_dataset",
+      "cells": 18,
+      "precision": 0.49681399076106314,
+      "recall": 0.2553080978775175,
+      "f1": 0.236672677000232,
+      "false_positive_rate": 0.03187467417138236
+    },
+    {
+      "cohort": "strict_finite",
+      "relationship": "in_domain",
+      "cells": 9,
+      "precision": 0.7988385763516539,
+      "recall": 0.6280580073394888,
+      "f1": 0.6878272766821842,
+      "false_positive_rate": 0.0010671502371497105
+    },
+    {
+      "cohort": "strict_finite",
+      "relationship": "same_model_cross_dataset",
+      "cells": 18,
+      "precision": 0.6208894581717556,
+      "recall": 0.5408698696227899,
+      "f1": 0.4328015556540163,
+      "false_positive_rate": 0.05807272662166793
+    }
+  ],
+  "artifact_paths": {
+    "metrics": "/data01/cd_workspace/Detect_SDC/experiments/transfer_36d_k28/transfer_metrics.csv",
+    "source_detectors": "/data01/cd_workspace/Detect_SDC/experiments/transfer_36d_k28/source_detectors.csv",
+    "relationship_summary": "/data01/cd_workspace/Detect_SDC/experiments/transfer_36d_k28/relationship_summary.csv",
+    "source_summary": "/data01/cd_workspace/Detect_SDC/experiments/transfer_36d_k28/source_summary.csv"
+  }
+}

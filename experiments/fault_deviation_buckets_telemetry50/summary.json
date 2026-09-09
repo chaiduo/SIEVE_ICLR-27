@@ -1,0 +1,511 @@
+{
+  "protocol": {
+    "source": "/data01/cd_workspace/Detect_SDC/experiments/telemetry_50",
+    "jobs": [
+      "qwen25_vl_earthvqa",
+      "qwen25_vl_lingoqa",
+      "qwen25_vl_vqav2",
+      "internvl3_earthvqa",
+      "internvl3_lingoqa",
+      "internvl3_vqav2",
+      "llava15_earthvqa",
+      "llava15_lingoqa",
+      "llava15_vqav2"
+    ],
+    "population": "all injected rows across fit/calibration/test",
+    "deviation": "abs(after - before)",
+    "significant_sdc": "pred_answer != clean_answer and significance == 2",
+    "non_significant_sdc": "pred_answer != clean_answer and significance in {0, 1}",
+    "invalid_labels": "excluded",
+    "non_finite_values": "separate bucket",
+    "buckets": [
+      "[0,1]",
+      "(1,1e6]",
+      ">1e6",
+      "non_finite"
+    ],
+    "json_parser": "ujson"
+  },
+  "aggregate": {
+    "job": "all_jobs",
+    "model": "all",
+    "dataset": "all",
+    "total_rows": 495000,
+    "clean_rows": 45000,
+    "injected_rows": 450000,
+    "valid_injected_rows": 449577,
+    "invalid_label_rows": 423,
+    "invalid_fault_rows": 0,
+    "is_sdc_mismatches": 0,
+    "counts": {
+      "[0,1]": [
+        326200,
+        941
+      ],
+      "(1,1e6]": [
+        76007,
+        586
+      ],
+      ">1e6": [
+        29231,
+        11188
+      ],
+      "non_finite": [
+        145,
+        5279
+      ]
+    },
+    "sdc_counts": {
+      "[0,1]": [
+        39248,
+        941
+      ],
+      "(1,1e6]": [
+        10265,
+        586
+      ],
+      ">1e6": [
+        6240,
+        11188
+      ],
+      "non_finite": [
+        12,
+        5279
+      ]
+    }
+  },
+  "jobs": [
+    {
+      "job": "qwen25_vl_earthvqa",
+      "model": "Qwen2.5-VL-7B",
+      "dataset": "EarthVQA",
+      "total_rows": 55000,
+      "clean_rows": 5000,
+      "injected_rows": 50000,
+      "valid_injected_rows": 49897,
+      "invalid_label_rows": 103,
+      "invalid_fault_rows": 0,
+      "is_sdc_mismatches": 0,
+      "counts": {
+        "[0,1]": [
+          34540,
+          147
+        ],
+        "(1,1e6]": [
+          8406,
+          36
+        ],
+        ">1e6": [
+          5281,
+          799
+        ],
+        "non_finite": [
+          11,
+          677
+        ]
+      },
+      "sdc_counts": {
+        "[0,1]": [
+          7735,
+          147
+        ],
+        "(1,1e6]": [
+          1906,
+          36
+        ],
+        ">1e6": [
+          1510,
+          799
+        ],
+        "non_finite": [
+          0,
+          677
+        ]
+      }
+    },
+    {
+      "job": "qwen25_vl_lingoqa",
+      "model": "Qwen2.5-VL-7B",
+      "dataset": "LingoQA",
+      "total_rows": 55000,
+      "clean_rows": 5000,
+      "injected_rows": 50000,
+      "valid_injected_rows": 49962,
+      "invalid_label_rows": 38,
+      "invalid_fault_rows": 0,
+      "is_sdc_mismatches": 0,
+      "counts": {
+        "[0,1]": [
+          34633,
+          116
+        ],
+        "(1,1e6]": [
+          8372,
+          45
+        ],
+        ">1e6": [
+          5345,
+          772
+        ],
+        "non_finite": [
+          13,
+          666
+        ]
+      },
+      "sdc_counts": {
+        "[0,1]": [
+          5872,
+          116
+        ],
+        "(1,1e6]": [
+          1399,
+          45
+        ],
+        ">1e6": [
+          1184,
+          772
+        ],
+        "non_finite": [
+          1,
+          666
+        ]
+      }
+    },
+    {
+      "job": "qwen25_vl_vqav2",
+      "model": "Qwen2.5-VL-7B",
+      "dataset": "VQAv2",
+      "total_rows": 55000,
+      "clean_rows": 5000,
+      "injected_rows": 50000,
+      "valid_injected_rows": 49950,
+      "invalid_label_rows": 50,
+      "invalid_fault_rows": 0,
+      "is_sdc_mismatches": 0,
+      "counts": {
+        "[0,1]": [
+          34750,
+          205
+        ],
+        "(1,1e6]": [
+          8180,
+          54
+        ],
+        ">1e6": [
+          5311,
+          774
+        ],
+        "non_finite": [
+          15,
+          661
+        ]
+      },
+      "sdc_counts": {
+        "[0,1]": [
+          4814,
+          205
+        ],
+        "(1,1e6]": [
+          1071,
+          54
+        ],
+        ">1e6": [
+          986,
+          774
+        ],
+        "non_finite": [
+          2,
+          661
+        ]
+      }
+    },
+    {
+      "job": "internvl3_earthvqa",
+      "model": "InternVL3-8B",
+      "dataset": "EarthVQA",
+      "total_rows": 55000,
+      "clean_rows": 5000,
+      "injected_rows": 50000,
+      "valid_injected_rows": 49871,
+      "invalid_label_rows": 129,
+      "invalid_fault_rows": 0,
+      "is_sdc_mismatches": 0,
+      "counts": {
+        "[0,1]": [
+          33903,
+          63
+        ],
+        "(1,1e6]": [
+          9051,
+          29
+        ],
+        ">1e6": [
+          3841,
+          2321
+        ],
+        "non_finite": [
+          30,
+          633
+        ]
+      },
+      "sdc_counts": {
+        "[0,1]": [
+          8061,
+          63
+        ],
+        "(1,1e6]": [
+          2016,
+          29
+        ],
+        ">1e6": [
+          970,
+          2321
+        ],
+        "non_finite": [
+          5,
+          633
+        ]
+      }
+    },
+    {
+      "job": "internvl3_lingoqa",
+      "model": "InternVL3-8B",
+      "dataset": "LingoQA",
+      "total_rows": 55000,
+      "clean_rows": 5000,
+      "injected_rows": 50000,
+      "valid_injected_rows": 49955,
+      "invalid_label_rows": 45,
+      "invalid_fault_rows": 0,
+      "is_sdc_mismatches": 0,
+      "counts": {
+        "[0,1]": [
+          33963,
+          150
+        ],
+        "(1,1e6]": [
+          8925,
+          51
+        ],
+        ">1e6": [
+          3837,
+          2372
+        ],
+        "non_finite": [
+          17,
+          640
+        ]
+      },
+      "sdc_counts": {
+        "[0,1]": [
+          6190,
+          150
+        ],
+        "(1,1e6]": [
+          1616,
+          51
+        ],
+        ">1e6": [
+          763,
+          2372
+        ],
+        "non_finite": [
+          1,
+          640
+        ]
+      }
+    },
+    {
+      "job": "internvl3_vqav2",
+      "model": "InternVL3-8B",
+      "dataset": "VQAv2",
+      "total_rows": 55000,
+      "clean_rows": 5000,
+      "injected_rows": 50000,
+      "valid_injected_rows": 49958,
+      "invalid_label_rows": 42,
+      "invalid_fault_rows": 0,
+      "is_sdc_mismatches": 0,
+      "counts": {
+        "[0,1]": [
+          34061,
+          146
+        ],
+        "(1,1e6]": [
+          8833,
+          50
+        ],
+        ">1e6": [
+          3815,
+          2401
+        ],
+        "non_finite": [
+          24,
+          628
+        ]
+      },
+      "sdc_counts": {
+        "[0,1]": [
+          6098,
+          146
+        ],
+        "(1,1e6]": [
+          1526,
+          50
+        ],
+        ">1e6": [
+          783,
+          2401
+        ],
+        "non_finite": [
+          3,
+          628
+        ]
+      }
+    },
+    {
+      "job": "llava15_earthvqa",
+      "model": "LLaVA-1.5-7B",
+      "dataset": "EarthVQA",
+      "total_rows": 55000,
+      "clean_rows": 5000,
+      "injected_rows": 50000,
+      "valid_injected_rows": 49997,
+      "invalid_label_rows": 3,
+      "invalid_fault_rows": 0,
+      "is_sdc_mismatches": 0,
+      "counts": {
+        "[0,1]": [
+          40172,
+          23
+        ],
+        "(1,1e6]": [
+          8043,
+          111
+        ],
+        ">1e6": [
+          602,
+          577
+        ],
+        "non_finite": [
+          10,
+          459
+        ]
+      },
+      "sdc_counts": {
+        "[0,1]": [
+          191,
+          23
+        ],
+        "(1,1e6]": [
+          282,
+          111
+        ],
+        ">1e6": [
+          21,
+          577
+        ],
+        "non_finite": [
+          0,
+          459
+        ]
+      }
+    },
+    {
+      "job": "llava15_lingoqa",
+      "model": "LLaVA-1.5-7B",
+      "dataset": "LingoQA",
+      "total_rows": 55000,
+      "clean_rows": 5000,
+      "injected_rows": 50000,
+      "valid_injected_rows": 49988,
+      "invalid_label_rows": 12,
+      "invalid_fault_rows": 0,
+      "is_sdc_mismatches": 0,
+      "counts": {
+        "[0,1]": [
+          40079,
+          44
+        ],
+        "(1,1e6]": [
+          8070,
+          130
+        ],
+        ">1e6": [
+          595,
+          589
+        ],
+        "non_finite": [
+          15,
+          466
+        ]
+      },
+      "sdc_counts": {
+        "[0,1]": [
+          262,
+          44
+        ],
+        "(1,1e6]": [
+          415,
+          130
+        ],
+        ">1e6": [
+          21,
+          589
+        ],
+        "non_finite": [
+          0,
+          466
+        ]
+      }
+    },
+    {
+      "job": "llava15_vqav2",
+      "model": "LLaVA-1.5-7B",
+      "dataset": "VQAv2",
+      "total_rows": 55000,
+      "clean_rows": 5000,
+      "injected_rows": 50000,
+      "valid_injected_rows": 49999,
+      "invalid_label_rows": 1,
+      "invalid_fault_rows": 0,
+      "is_sdc_mismatches": 0,
+      "counts": {
+        "[0,1]": [
+          40099,
+          47
+        ],
+        "(1,1e6]": [
+          8127,
+          80
+        ],
+        ">1e6": [
+          604,
+          583
+        ],
+        "non_finite": [
+          10,
+          449
+        ]
+      },
+      "sdc_counts": {
+        "[0,1]": [
+          25,
+          47
+        ],
+        "(1,1e6]": [
+          34,
+          80
+        ],
+        ">1e6": [
+          2,
+          583
+        ],
+        "non_finite": [
+          0,
+          449
+        ]
+      }
+    }
+  ]
+}

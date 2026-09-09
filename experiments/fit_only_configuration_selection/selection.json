@@ -1,0 +1,23 @@
+{
+  "primary_selection_metric": "nine-task Full macro Significant-SDC F1",
+  "tie_breakers": [
+    "canonical-finite macro F1",
+    "Full macro recall",
+    "smaller K",
+    "fewer features"
+  ],
+  "selected_configuration": {
+    "rank": 1,
+    "profile": "36D",
+    "k": 28,
+    "feature_count": 36,
+    "full_f1": 0.9342205336320796,
+    "full_recall": 0.8865965585887147,
+    "full_fpr": 0.00027705191016347774,
+    "canonical_finite_f1": 0.8738768701426617,
+    "canonical_finite_recall": 0.7964850239868523,
+    "canonical_finite_fpr": 0.00027705191016347774
+  },
+  "ranking_path": "/data01/cd_workspace/Detect_SDC/experiments/fit_only_configuration_selection/configuration_ranking.csv",
+  "macro_metrics_path": "/data01/cd_workspace/Detect_SDC/experiments/fit_only_configuration_selection/macro_metrics.csv"
+}

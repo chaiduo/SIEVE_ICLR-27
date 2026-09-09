@@ -1,0 +1,89 @@
+{
+  "protocol": "outer-Fit-only configuration selection",
+  "profiles": [
+    "36D",
+    "48D",
+    "60D",
+    "72D"
+  ],
+  "k_values": [
+    1,
+    2,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32
+  ],
+  "jobs": [
+    {
+      "job": "qwen25_vl_earthvqa",
+      "model": "qwen25_vl",
+      "dataset": "earthvqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "qwen25_vl_lingoqa",
+      "model": "qwen25_vl",
+      "dataset": "lingoqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "qwen25_vl_vqav2",
+      "model": "qwen25_vl",
+      "dataset": "vqav2",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "llava15_earthvqa",
+      "model": "llava15",
+      "dataset": "earthvqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "llava15_lingoqa",
+      "model": "llava15",
+      "dataset": "lingoqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "llava15_vqav2",
+      "model": "llava15",
+      "dataset": "vqav2",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "internvl3_earthvqa",
+      "model": "internvl3",
+      "dataset": "earthvqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "internvl3_lingoqa",
+      "model": "internvl3",
+      "dataset": "lingoqa",
+      "group_column": "semantic_group_id"
+    },
+    {
+      "job": "internvl3_vqav2",
+      "model": "internvl3",
+      "dataset": "vqav2",
+      "group_column": "semantic_group_id"
+    }
+  ],
+  "seed": 20260907,
+  "selection_validation_ratio_of_outer_fit": 0.15,
+  "threshold_calibration_ratio_of_outer_fit": 0.15,
+  "model_fit_pool_ratio_of_outer_fit": 0.7,
+  "early_stopping_ratio_of_model_fit_pool": 0.15,
+  "canonical_finite_definition": "outer-Fit rows with at least one finite 72D/K=2 feature",
+  "forbidden_partitions": [
+    "outer calibration",
+    "outer final test"
+  ],
+  "selection_metric": "nine-task Full macro Significant-SDC F1",
+  "feature_root": "/data01/cd_workspace/Detect_SDC/experiments"
+}

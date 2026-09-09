@@ -1,0 +1,4 @@
+scope_type,scope,model,dataset,bucket_order,deviation_bucket,samples,sample_share_pct,significant_sdc,significant_global_share_pct,non_significant_sdc,non_significant_global_share_pct
+all,all_jobs,all,all,0,"[0,1]",327141,73.65502428217303,941,0.21186392977194796,326200,73.4431603524011
+all,all_jobs,all,all,1,"(1,1e6]",76593,17.244733233818078,586,0.13193651737126622,76007,17.11279671644681
+all,all_jobs,all,all,2,>1e6,40419,9.10024248400889,11188,2.518951802644584,29231,6.581290681364305

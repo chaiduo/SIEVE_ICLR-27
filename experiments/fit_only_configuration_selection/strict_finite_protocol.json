@@ -1,0 +1,38 @@
+{
+  "purpose": "post-selection diagnostic only; not used for configuration ranking or tie-breaking",
+  "strict_finite_definition": "fixed selection-validation subset whose complete final 36D/K=28 vector has 36 finite cleaned features",
+  "reference_feature_path_pattern": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_36d/{job}/k_28/features.csv",
+  "prediction_source_pattern": "/data01/cd_workspace/Detect_SDC/experiments/fit_only_configuration_selection/predictions/{job}__{profile}.csv.gz",
+  "training_or_recalibration": "none; reused saved probabilities and thresholds",
+  "profiles": [
+    "36D",
+    "48D",
+    "60D",
+    "72D"
+  ],
+  "k_values": [
+    1,
+    2,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32
+  ],
+  "jobs": [
+    "qwen25_vl_earthvqa",
+    "qwen25_vl_lingoqa",
+    "qwen25_vl_vqav2",
+    "llava15_earthvqa",
+    "llava15_lingoqa",
+    "llava15_vqav2",
+    "internvl3_earthvqa",
+    "internvl3_lingoqa",
+    "internvl3_vqav2"
+  ],
+  "detailed_metrics_path": "/data01/cd_workspace/Detect_SDC/experiments/fit_only_configuration_selection/strict_finite_detailed_metrics.csv",
+  "macro_metrics_path": "/data01/cd_workspace/Detect_SDC/experiments/fit_only_configuration_selection/strict_finite_macro_metrics.csv"
+}

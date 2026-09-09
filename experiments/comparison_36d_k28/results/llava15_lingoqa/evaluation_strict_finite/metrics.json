@@ -1,0 +1,1509 @@
+{
+  "job": "llava15_lingoqa",
+  "protocol": "significant_sdc_fit_calibration_final_test",
+  "records": "/data01/cd_workspace/Detect_SDC/experiments/comparison_36d_k28/results/llava15_lingoqa/score_records.jsonl",
+  "detector_summary": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_36d/llava15_lingoqa/k_28/output/metrics_summary.json",
+  "calibration_features": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_36d/llava15_lingoqa/k_28/calibration.csv",
+  "test_features": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_36d/llava15_lingoqa/k_28/features.csv",
+  "finite_cohort_features": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_36d/llava15_lingoqa/k_28/features.csv",
+  "finite_cohort": {
+    "definition": "all final SIEVE reference features are finite after numeric coercion; NaN, +/-Inf, and values outside the float32 range are excluded",
+    "reference_features": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_36d/llava15_lingoqa/k_28/features.csv",
+    "reference_split": "test",
+    "reference_feature_count": 36,
+    "reference_test_rows": 8245,
+    "strict_finite_rows": 8086,
+    "excluded_non_finite_rows": 159,
+    "scored_test_rows": 8245,
+    "selected_rows_present_in_scored_test": 8086
+  },
+  "calibration_objective": "maximize significant-SDC F1",
+  "negative_definition": "significant_sdc_target == 0",
+  "calibration_rows": 8250,
+  "calibration_non_significant_rows": 8084,
+  "test_rows": 8245,
+  "methods": {
+    "Ranger-style": {
+      "threshold_calibration": {
+        "strategy": "maximize_f1",
+        "threshold": Infinity,
+        "calibration_precision": 1.0,
+        "calibration_recall": 0.8253012048192772,
+        "calibration_f1": 0.9042904290429044,
+        "calibration_fpr": 0.0,
+        "samples": 8250,
+        "positive_samples": 166,
+        "negative_samples": 8084,
+        "predicted_positive": 137,
+        "tie_breaker": "highest_threshold",
+        "comparison": "score > threshold; positive infinity always detected"
+      },
+      "cohorts": {
+        "full": {
+          "metrics": {
+            "samples": 8245,
+            "detected": 159,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 159,
+            "detected_significant_sdc": 159,
+            "false_positive_non_significant": 0,
+            "sdc_recall": 0.5389830508474577,
+            "significant_sdc_recall": 0.8502673796791443,
+            "non_significant_fpr": 0.0,
+            "significant_sdc_precision": 1.0,
+            "significant_sdc_f1": 0.9190751445086706
+          },
+          "bootstrap_95_ci": {
+            "sdc_recall": [
+              0.4371241782169926,
+              0.6568284982013
+            ],
+            "significant_sdc_recall": [
+              0.7868020304568528,
+              0.9076107859531772
+            ],
+            "non_significant_fpr": [
+              0.0,
+              0.0
+            ],
+            "significant_sdc_f1": [
+              0.8806818181818182,
+              0.951568100358423
+            ]
+          },
+          "per_fault_run": {
+            "0": {
+              "samples": 748,
+              "detected": 16,
+              "sdc_samples": 28,
+              "significant_sdc_samples": 18,
+              "non_significant_samples": 730,
+              "detected_sdc": 16,
+              "detected_significant_sdc": 16,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.5714285714285714,
+              "significant_sdc_recall": 0.8888888888888888,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9411764705882353
+            },
+            "1": {
+              "samples": 750,
+              "detected": 21,
+              "sdc_samples": 39,
+              "significant_sdc_samples": 26,
+              "non_significant_samples": 724,
+              "detected_sdc": 21,
+              "detected_significant_sdc": 21,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.5384615384615384,
+              "significant_sdc_recall": 0.8076923076923077,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.8936170212765957
+            },
+            "2": {
+              "samples": 750,
+              "detected": 15,
+              "sdc_samples": 27,
+              "significant_sdc_samples": 18,
+              "non_significant_samples": 732,
+              "detected_sdc": 15,
+              "detected_significant_sdc": 15,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.5555555555555556,
+              "significant_sdc_recall": 0.8333333333333334,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9090909090909091
+            },
+            "3": {
+              "samples": 749,
+              "detected": 15,
+              "sdc_samples": 24,
+              "significant_sdc_samples": 19,
+              "non_significant_samples": 730,
+              "detected_sdc": 15,
+              "detected_significant_sdc": 15,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.625,
+              "significant_sdc_recall": 0.7894736842105263,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.8823529411764706
+            },
+            "4": {
+              "samples": 749,
+              "detected": 14,
+              "sdc_samples": 31,
+              "significant_sdc_samples": 15,
+              "non_significant_samples": 734,
+              "detected_sdc": 14,
+              "detected_significant_sdc": 14,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.45161290322580644,
+              "significant_sdc_recall": 0.9333333333333333,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9655172413793104
+            },
+            "5": {
+              "samples": 750,
+              "detected": 14,
+              "sdc_samples": 21,
+              "significant_sdc_samples": 14,
+              "non_significant_samples": 736,
+              "detected_sdc": 14,
+              "detected_significant_sdc": 14,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.6666666666666666,
+              "significant_sdc_recall": 1.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 1.0
+            },
+            "6": {
+              "samples": 749,
+              "detected": 12,
+              "sdc_samples": 26,
+              "significant_sdc_samples": 14,
+              "non_significant_samples": 735,
+              "detected_sdc": 12,
+              "detected_significant_sdc": 12,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.46153846153846156,
+              "significant_sdc_recall": 0.8571428571428571,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.923076923076923
+            },
+            "7": {
+              "samples": 750,
+              "detected": 24,
+              "sdc_samples": 39,
+              "significant_sdc_samples": 27,
+              "non_significant_samples": 723,
+              "detected_sdc": 24,
+              "detected_significant_sdc": 24,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.6153846153846154,
+              "significant_sdc_recall": 0.8888888888888888,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9411764705882353
+            },
+            "8": {
+              "samples": 750,
+              "detected": 15,
+              "sdc_samples": 27,
+              "significant_sdc_samples": 15,
+              "non_significant_samples": 735,
+              "detected_sdc": 15,
+              "detected_significant_sdc": 15,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.5555555555555556,
+              "significant_sdc_recall": 1.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 1.0
+            },
+            "9": {
+              "samples": 750,
+              "detected": 13,
+              "sdc_samples": 33,
+              "significant_sdc_samples": 21,
+              "non_significant_samples": 729,
+              "detected_sdc": 13,
+              "detected_significant_sdc": 13,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.3939393939393939,
+              "significant_sdc_recall": 0.6190476190476191,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.7647058823529412
+            }
+          }
+        },
+        "finite_only": {
+          "metrics": {
+            "samples": 8086,
+            "detected": 0,
+            "sdc_samples": 136,
+            "significant_sdc_samples": 28,
+            "non_significant_samples": 8058,
+            "detected_sdc": 0,
+            "detected_significant_sdc": 0,
+            "false_positive_non_significant": 0,
+            "sdc_recall": 0.0,
+            "significant_sdc_recall": 0.0,
+            "non_significant_fpr": 0.0,
+            "significant_sdc_precision": 0.0,
+            "significant_sdc_f1": 0.0
+          },
+          "bootstrap_95_ci": {
+            "sdc_recall": [
+              0.0,
+              0.0
+            ],
+            "significant_sdc_recall": [
+              0.0,
+              0.0
+            ],
+            "non_significant_fpr": [
+              0.0,
+              0.0
+            ],
+            "significant_sdc_f1": [
+              0.0,
+              0.0
+            ]
+          },
+          "per_fault_run": {
+            "0": {
+              "samples": 732,
+              "detected": 0,
+              "sdc_samples": 12,
+              "significant_sdc_samples": 2,
+              "non_significant_samples": 730,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "1": {
+              "samples": 729,
+              "detected": 0,
+              "sdc_samples": 18,
+              "significant_sdc_samples": 5,
+              "non_significant_samples": 724,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "2": {
+              "samples": 735,
+              "detected": 0,
+              "sdc_samples": 12,
+              "significant_sdc_samples": 3,
+              "non_significant_samples": 732,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "3": {
+              "samples": 734,
+              "detected": 0,
+              "sdc_samples": 9,
+              "significant_sdc_samples": 4,
+              "non_significant_samples": 730,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "4": {
+              "samples": 735,
+              "detected": 0,
+              "sdc_samples": 17,
+              "significant_sdc_samples": 1,
+              "non_significant_samples": 734,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "5": {
+              "samples": 736,
+              "detected": 0,
+              "sdc_samples": 7,
+              "significant_sdc_samples": 0,
+              "non_significant_samples": 736,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "6": {
+              "samples": 737,
+              "detected": 0,
+              "sdc_samples": 14,
+              "significant_sdc_samples": 2,
+              "non_significant_samples": 735,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "7": {
+              "samples": 726,
+              "detected": 0,
+              "sdc_samples": 15,
+              "significant_sdc_samples": 3,
+              "non_significant_samples": 723,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "8": {
+              "samples": 735,
+              "detected": 0,
+              "sdc_samples": 12,
+              "significant_sdc_samples": 0,
+              "non_significant_samples": 735,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "9": {
+              "samples": 737,
+              "detected": 0,
+              "sdc_samples": 20,
+              "significant_sdc_samples": 8,
+              "non_significant_samples": 729,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            }
+          }
+        }
+      },
+      "supplementary_operating_points": {
+        "0.005": {
+          "calibration": {
+            "threshold": 1.3716160787530762,
+            "target_fpr": 0.005,
+            "achieved_fpr": 0.003339930727362692,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 159,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 159,
+            "detected_significant_sdc": 159,
+            "false_positive_non_significant": 0,
+            "sdc_recall": 0.5389830508474577,
+            "significant_sdc_recall": 0.8502673796791443,
+            "non_significant_fpr": 0.0,
+            "significant_sdc_precision": 1.0,
+            "significant_sdc_f1": 0.9190751445086706
+          }
+        },
+        "0.01": {
+          "calibration": {
+            "threshold": 1.1451793152494159,
+            "target_fpr": 0.01,
+            "achieved_fpr": 0.009896091044037604,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 159,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 159,
+            "detected_significant_sdc": 159,
+            "false_positive_non_significant": 0,
+            "sdc_recall": 0.5389830508474577,
+            "significant_sdc_recall": 0.8502673796791443,
+            "non_significant_fpr": 0.0,
+            "significant_sdc_precision": 1.0,
+            "significant_sdc_f1": 0.9190751445086706
+          }
+        },
+        "0.02": {
+          "calibration": {
+            "threshold": 0.356385068762279,
+            "target_fpr": 0.02,
+            "achieved_fpr": 0.01917367639782286,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 202,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 160,
+            "detected_significant_sdc": 159,
+            "false_positive_non_significant": 43,
+            "sdc_recall": 0.5423728813559322,
+            "significant_sdc_recall": 0.8502673796791443,
+            "non_significant_fpr": 0.005336311739885828,
+            "significant_sdc_precision": 0.7871287128712872,
+            "significant_sdc_f1": 0.8174807197943444
+          }
+        },
+        "0.05": {
+          "calibration": {
+            "threshold": 0.23089430894308943,
+            "target_fpr": 0.05,
+            "achieved_fpr": 0.04948045522018803,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 309,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 162,
+            "detected_significant_sdc": 160,
+            "false_positive_non_significant": 149,
+            "sdc_recall": 0.5491525423728814,
+            "significant_sdc_recall": 0.8556149732620321,
+            "non_significant_fpr": 0.018490940680069495,
+            "significant_sdc_precision": 0.517799352750809,
+            "significant_sdc_f1": 0.6451612903225806
+          }
+        }
+      }
+    },
+    "Dr.DNA-style": {
+      "threshold_calibration": {
+        "strategy": "maximize_f1",
+        "threshold": 0.1933993632250236,
+        "calibration_precision": 0.9930555555555556,
+        "calibration_recall": 0.8614457831325302,
+        "calibration_f1": 0.9225806451612903,
+        "calibration_fpr": 0.00012370113805047008,
+        "samples": 8250,
+        "positive_samples": 166,
+        "negative_samples": 8084,
+        "predicted_positive": 144,
+        "tie_breaker": "highest_threshold",
+        "comparison": "score > threshold; positive infinity always detected"
+      },
+      "cohorts": {
+        "full": {
+          "metrics": {
+            "samples": 8245,
+            "detected": 160,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 160,
+            "detected_significant_sdc": 160,
+            "false_positive_non_significant": 0,
+            "sdc_recall": 0.5423728813559322,
+            "significant_sdc_recall": 0.8556149732620321,
+            "non_significant_fpr": 0.0,
+            "significant_sdc_precision": 1.0,
+            "significant_sdc_f1": 0.9221902017291067
+          },
+          "bootstrap_95_ci": {
+            "sdc_recall": [
+              0.43839443419554897,
+              0.6587301587301587
+            ],
+            "significant_sdc_recall": [
+              0.7945908408408409,
+              0.912568306010929
+            ],
+            "non_significant_fpr": [
+              0.0,
+              0.0
+            ],
+            "significant_sdc_f1": [
+              0.8855398373680481,
+              0.9542857142857144
+            ]
+          },
+          "per_fault_run": {
+            "0": {
+              "samples": 748,
+              "detected": 16,
+              "sdc_samples": 28,
+              "significant_sdc_samples": 18,
+              "non_significant_samples": 730,
+              "detected_sdc": 16,
+              "detected_significant_sdc": 16,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.5714285714285714,
+              "significant_sdc_recall": 0.8888888888888888,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9411764705882353
+            },
+            "1": {
+              "samples": 750,
+              "detected": 21,
+              "sdc_samples": 39,
+              "significant_sdc_samples": 26,
+              "non_significant_samples": 724,
+              "detected_sdc": 21,
+              "detected_significant_sdc": 21,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.5384615384615384,
+              "significant_sdc_recall": 0.8076923076923077,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.8936170212765957
+            },
+            "2": {
+              "samples": 750,
+              "detected": 16,
+              "sdc_samples": 27,
+              "significant_sdc_samples": 18,
+              "non_significant_samples": 732,
+              "detected_sdc": 16,
+              "detected_significant_sdc": 16,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.5925925925925926,
+              "significant_sdc_recall": 0.8888888888888888,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9411764705882353
+            },
+            "3": {
+              "samples": 749,
+              "detected": 15,
+              "sdc_samples": 24,
+              "significant_sdc_samples": 19,
+              "non_significant_samples": 730,
+              "detected_sdc": 15,
+              "detected_significant_sdc": 15,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.625,
+              "significant_sdc_recall": 0.7894736842105263,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.8823529411764706
+            },
+            "4": {
+              "samples": 749,
+              "detected": 14,
+              "sdc_samples": 31,
+              "significant_sdc_samples": 15,
+              "non_significant_samples": 734,
+              "detected_sdc": 14,
+              "detected_significant_sdc": 14,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.45161290322580644,
+              "significant_sdc_recall": 0.9333333333333333,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9655172413793104
+            },
+            "5": {
+              "samples": 750,
+              "detected": 14,
+              "sdc_samples": 21,
+              "significant_sdc_samples": 14,
+              "non_significant_samples": 736,
+              "detected_sdc": 14,
+              "detected_significant_sdc": 14,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.6666666666666666,
+              "significant_sdc_recall": 1.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 1.0
+            },
+            "6": {
+              "samples": 749,
+              "detected": 12,
+              "sdc_samples": 26,
+              "significant_sdc_samples": 14,
+              "non_significant_samples": 735,
+              "detected_sdc": 12,
+              "detected_significant_sdc": 12,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.46153846153846156,
+              "significant_sdc_recall": 0.8571428571428571,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.923076923076923
+            },
+            "7": {
+              "samples": 750,
+              "detected": 24,
+              "sdc_samples": 39,
+              "significant_sdc_samples": 27,
+              "non_significant_samples": 723,
+              "detected_sdc": 24,
+              "detected_significant_sdc": 24,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.6153846153846154,
+              "significant_sdc_recall": 0.8888888888888888,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9411764705882353
+            },
+            "8": {
+              "samples": 750,
+              "detected": 15,
+              "sdc_samples": 27,
+              "significant_sdc_samples": 15,
+              "non_significant_samples": 735,
+              "detected_sdc": 15,
+              "detected_significant_sdc": 15,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.5555555555555556,
+              "significant_sdc_recall": 1.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 1.0
+            },
+            "9": {
+              "samples": 750,
+              "detected": 13,
+              "sdc_samples": 33,
+              "significant_sdc_samples": 21,
+              "non_significant_samples": 729,
+              "detected_sdc": 13,
+              "detected_significant_sdc": 13,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.3939393939393939,
+              "significant_sdc_recall": 0.6190476190476191,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.7647058823529412
+            }
+          }
+        },
+        "finite_only": {
+          "metrics": {
+            "samples": 8086,
+            "detected": 1,
+            "sdc_samples": 136,
+            "significant_sdc_samples": 28,
+            "non_significant_samples": 8058,
+            "detected_sdc": 1,
+            "detected_significant_sdc": 1,
+            "false_positive_non_significant": 0,
+            "sdc_recall": 0.007352941176470588,
+            "significant_sdc_recall": 0.03571428571428571,
+            "non_significant_fpr": 0.0,
+            "significant_sdc_precision": 1.0,
+            "significant_sdc_f1": 0.0689655172413793
+          },
+          "bootstrap_95_ci": {
+            "sdc_recall": [
+              0.0,
+              0.026785714285714284
+            ],
+            "significant_sdc_recall": [
+              0.0,
+              0.125
+            ],
+            "non_significant_fpr": [
+              0.0,
+              0.0
+            ],
+            "significant_sdc_f1": [
+              0.0,
+              0.2222222222222222
+            ]
+          },
+          "per_fault_run": {
+            "0": {
+              "samples": 732,
+              "detected": 0,
+              "sdc_samples": 12,
+              "significant_sdc_samples": 2,
+              "non_significant_samples": 730,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "1": {
+              "samples": 729,
+              "detected": 0,
+              "sdc_samples": 18,
+              "significant_sdc_samples": 5,
+              "non_significant_samples": 724,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "2": {
+              "samples": 735,
+              "detected": 1,
+              "sdc_samples": 12,
+              "significant_sdc_samples": 3,
+              "non_significant_samples": 732,
+              "detected_sdc": 1,
+              "detected_significant_sdc": 1,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.08333333333333333,
+              "significant_sdc_recall": 0.3333333333333333,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.5
+            },
+            "3": {
+              "samples": 734,
+              "detected": 0,
+              "sdc_samples": 9,
+              "significant_sdc_samples": 4,
+              "non_significant_samples": 730,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "4": {
+              "samples": 735,
+              "detected": 0,
+              "sdc_samples": 17,
+              "significant_sdc_samples": 1,
+              "non_significant_samples": 734,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "5": {
+              "samples": 736,
+              "detected": 0,
+              "sdc_samples": 7,
+              "significant_sdc_samples": 0,
+              "non_significant_samples": 736,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "6": {
+              "samples": 737,
+              "detected": 0,
+              "sdc_samples": 14,
+              "significant_sdc_samples": 2,
+              "non_significant_samples": 735,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "7": {
+              "samples": 726,
+              "detected": 0,
+              "sdc_samples": 15,
+              "significant_sdc_samples": 3,
+              "non_significant_samples": 723,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "8": {
+              "samples": 735,
+              "detected": 0,
+              "sdc_samples": 12,
+              "significant_sdc_samples": 0,
+              "non_significant_samples": 735,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "9": {
+              "samples": 737,
+              "detected": 0,
+              "sdc_samples": 20,
+              "significant_sdc_samples": 8,
+              "non_significant_samples": 729,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            }
+          }
+        }
+      },
+      "supplementary_operating_points": {
+        "0.005": {
+          "calibration": {
+            "threshold": 0.18665799976796707,
+            "target_fpr": 0.005,
+            "achieved_fpr": 0.004824344383968332,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 185,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 165,
+            "detected_significant_sdc": 165,
+            "false_positive_non_significant": 20,
+            "sdc_recall": 0.559322033898305,
+            "significant_sdc_recall": 0.8823529411764706,
+            "non_significant_fpr": 0.002482005460412013,
+            "significant_sdc_precision": 0.8918918918918919,
+            "significant_sdc_f1": 0.8870967741935484
+          }
+        },
+        "0.01": {
+          "calibration": {
+            "threshold": 0.1799301299058966,
+            "target_fpr": 0.01,
+            "achieved_fpr": 0.009772389905987135,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 208,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 166,
+            "detected_significant_sdc": 165,
+            "false_positive_non_significant": 43,
+            "sdc_recall": 0.5627118644067797,
+            "significant_sdc_recall": 0.8823529411764706,
+            "non_significant_fpr": 0.005336311739885828,
+            "significant_sdc_precision": 0.7932692307692307,
+            "significant_sdc_f1": 0.8354430379746834
+          }
+        },
+        "0.02": {
+          "calibration": {
+            "threshold": 0.1728366005740623,
+            "target_fpr": 0.02,
+            "achieved_fpr": 0.01892627412172192,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 253,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 169,
+            "detected_significant_sdc": 167,
+            "false_positive_non_significant": 86,
+            "sdc_recall": 0.5728813559322034,
+            "significant_sdc_recall": 0.893048128342246,
+            "non_significant_fpr": 0.010672623479771656,
+            "significant_sdc_precision": 0.6600790513833992,
+            "significant_sdc_f1": 0.759090909090909
+          }
+        },
+        "0.05": {
+          "calibration": {
+            "threshold": 0.16304250538921425,
+            "target_fpr": 0.05,
+            "achieved_fpr": 0.04972785749628897,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 407,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 179,
+            "detected_significant_sdc": 169,
+            "false_positive_non_significant": 238,
+            "sdc_recall": 0.6067796610169491,
+            "significant_sdc_recall": 0.9037433155080213,
+            "non_significant_fpr": 0.029535864978902954,
+            "significant_sdc_precision": 0.4152334152334152,
+            "significant_sdc_f1": 0.569023569023569
+          }
+        }
+      }
+    },
+    "SIEVE": {
+      "threshold_calibration": {
+        "strategy": "maximize_f1",
+        "threshold": 0.9801421165466309,
+        "calibration_precision": 1.0,
+        "calibration_recall": 0.9397590361445783,
+        "calibration_f1": 0.9689440993788819,
+        "calibration_fpr": 0.0,
+        "samples": 8250,
+        "positive_samples": 166,
+        "negative_samples": 8084,
+        "predicted_positive": 156,
+        "tie_breaker": "highest_threshold",
+        "comparison": "score > threshold; positive infinity always detected"
+      },
+      "cohorts": {
+        "full": {
+          "metrics": {
+            "samples": 8245,
+            "detected": 170,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 170,
+            "detected_significant_sdc": 169,
+            "false_positive_non_significant": 1,
+            "sdc_recall": 0.576271186440678,
+            "significant_sdc_recall": 0.9037433155080213,
+            "non_significant_fpr": 0.00012410027302060066,
+            "significant_sdc_precision": 0.9941176470588236,
+            "significant_sdc_f1": 0.9467787114845937
+          },
+          "bootstrap_95_ci": {
+            "sdc_recall": [
+              0.47400567428541124,
+              0.6961550632911392
+            ],
+            "significant_sdc_recall": [
+              0.8534031413612565,
+              0.9518716577540107
+            ],
+            "non_significant_fpr": [
+              0.0,
+              0.0003727634194831014
+            ],
+            "significant_sdc_f1": [
+              0.9176470588235295,
+              0.9726775956284153
+            ]
+          },
+          "per_fault_run": {
+            "0": {
+              "samples": 748,
+              "detected": 18,
+              "sdc_samples": 28,
+              "significant_sdc_samples": 18,
+              "non_significant_samples": 730,
+              "detected_sdc": 18,
+              "detected_significant_sdc": 18,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.6428571428571429,
+              "significant_sdc_recall": 1.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 1.0
+            },
+            "1": {
+              "samples": 750,
+              "detected": 22,
+              "sdc_samples": 39,
+              "significant_sdc_samples": 26,
+              "non_significant_samples": 724,
+              "detected_sdc": 22,
+              "detected_significant_sdc": 22,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.5641025641025641,
+              "significant_sdc_recall": 0.8461538461538461,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9166666666666666
+            },
+            "2": {
+              "samples": 750,
+              "detected": 17,
+              "sdc_samples": 27,
+              "significant_sdc_samples": 18,
+              "non_significant_samples": 732,
+              "detected_sdc": 17,
+              "detected_significant_sdc": 17,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.6296296296296297,
+              "significant_sdc_recall": 0.9444444444444444,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9714285714285714
+            },
+            "3": {
+              "samples": 749,
+              "detected": 15,
+              "sdc_samples": 24,
+              "significant_sdc_samples": 19,
+              "non_significant_samples": 730,
+              "detected_sdc": 15,
+              "detected_significant_sdc": 15,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.625,
+              "significant_sdc_recall": 0.7894736842105263,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.8823529411764706
+            },
+            "4": {
+              "samples": 749,
+              "detected": 14,
+              "sdc_samples": 31,
+              "significant_sdc_samples": 15,
+              "non_significant_samples": 734,
+              "detected_sdc": 14,
+              "detected_significant_sdc": 14,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.45161290322580644,
+              "significant_sdc_recall": 0.9333333333333333,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9655172413793104
+            },
+            "5": {
+              "samples": 750,
+              "detected": 14,
+              "sdc_samples": 21,
+              "significant_sdc_samples": 14,
+              "non_significant_samples": 736,
+              "detected_sdc": 14,
+              "detected_significant_sdc": 14,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.6666666666666666,
+              "significant_sdc_recall": 1.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 1.0
+            },
+            "6": {
+              "samples": 749,
+              "detected": 13,
+              "sdc_samples": 26,
+              "significant_sdc_samples": 14,
+              "non_significant_samples": 735,
+              "detected_sdc": 13,
+              "detected_significant_sdc": 13,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.5,
+              "significant_sdc_recall": 0.9285714285714286,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.962962962962963
+            },
+            "7": {
+              "samples": 750,
+              "detected": 25,
+              "sdc_samples": 39,
+              "significant_sdc_samples": 27,
+              "non_significant_samples": 723,
+              "detected_sdc": 25,
+              "detected_significant_sdc": 25,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.6410256410256411,
+              "significant_sdc_recall": 0.9259259259259259,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.9615384615384615
+            },
+            "8": {
+              "samples": 750,
+              "detected": 16,
+              "sdc_samples": 27,
+              "significant_sdc_samples": 15,
+              "non_significant_samples": 735,
+              "detected_sdc": 16,
+              "detected_significant_sdc": 15,
+              "false_positive_non_significant": 1,
+              "sdc_recall": 0.5925925925925926,
+              "significant_sdc_recall": 1.0,
+              "non_significant_fpr": 0.0013605442176870747,
+              "significant_sdc_precision": 0.9375,
+              "significant_sdc_f1": 0.967741935483871
+            },
+            "9": {
+              "samples": 750,
+              "detected": 16,
+              "sdc_samples": 33,
+              "significant_sdc_samples": 21,
+              "non_significant_samples": 729,
+              "detected_sdc": 16,
+              "detected_significant_sdc": 16,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.48484848484848486,
+              "significant_sdc_recall": 0.7619047619047619,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.8648648648648648
+            }
+          }
+        },
+        "finite_only": {
+          "metrics": {
+            "samples": 8086,
+            "detected": 11,
+            "sdc_samples": 136,
+            "significant_sdc_samples": 28,
+            "non_significant_samples": 8058,
+            "detected_sdc": 11,
+            "detected_significant_sdc": 10,
+            "false_positive_non_significant": 1,
+            "sdc_recall": 0.08088235294117647,
+            "significant_sdc_recall": 0.35714285714285715,
+            "non_significant_fpr": 0.00012410027302060066,
+            "significant_sdc_precision": 0.9090909090909091,
+            "significant_sdc_f1": 0.5128205128205129
+          },
+          "bootstrap_95_ci": {
+            "sdc_recall": [
+              0.038461538461538464,
+              0.14563106796116504
+            ],
+            "significant_sdc_recall": [
+              0.19047619047619047,
+              0.5518199233716461
+            ],
+            "non_significant_fpr": [
+              0.0,
+              0.0003727634194831014
+            ],
+            "significant_sdc_f1": [
+              0.3076923076923077,
+              0.6923076923076923
+            ]
+          },
+          "per_fault_run": {
+            "0": {
+              "samples": 732,
+              "detected": 2,
+              "sdc_samples": 12,
+              "significant_sdc_samples": 2,
+              "non_significant_samples": 730,
+              "detected_sdc": 2,
+              "detected_significant_sdc": 2,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.16666666666666666,
+              "significant_sdc_recall": 1.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 1.0
+            },
+            "1": {
+              "samples": 729,
+              "detected": 1,
+              "sdc_samples": 18,
+              "significant_sdc_samples": 5,
+              "non_significant_samples": 724,
+              "detected_sdc": 1,
+              "detected_significant_sdc": 1,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.05555555555555555,
+              "significant_sdc_recall": 0.2,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.33333333333333337
+            },
+            "2": {
+              "samples": 735,
+              "detected": 2,
+              "sdc_samples": 12,
+              "significant_sdc_samples": 3,
+              "non_significant_samples": 732,
+              "detected_sdc": 2,
+              "detected_significant_sdc": 2,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.16666666666666666,
+              "significant_sdc_recall": 0.6666666666666666,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.8
+            },
+            "3": {
+              "samples": 734,
+              "detected": 0,
+              "sdc_samples": 9,
+              "significant_sdc_samples": 4,
+              "non_significant_samples": 730,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "4": {
+              "samples": 735,
+              "detected": 0,
+              "sdc_samples": 17,
+              "significant_sdc_samples": 1,
+              "non_significant_samples": 734,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "5": {
+              "samples": 736,
+              "detected": 0,
+              "sdc_samples": 7,
+              "significant_sdc_samples": 0,
+              "non_significant_samples": 736,
+              "detected_sdc": 0,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.0,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "6": {
+              "samples": 737,
+              "detected": 1,
+              "sdc_samples": 14,
+              "significant_sdc_samples": 2,
+              "non_significant_samples": 735,
+              "detected_sdc": 1,
+              "detected_significant_sdc": 1,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.07142857142857142,
+              "significant_sdc_recall": 0.5,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.6666666666666666
+            },
+            "7": {
+              "samples": 726,
+              "detected": 1,
+              "sdc_samples": 15,
+              "significant_sdc_samples": 3,
+              "non_significant_samples": 723,
+              "detected_sdc": 1,
+              "detected_significant_sdc": 1,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.06666666666666667,
+              "significant_sdc_recall": 0.3333333333333333,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.5
+            },
+            "8": {
+              "samples": 735,
+              "detected": 1,
+              "sdc_samples": 12,
+              "significant_sdc_samples": 0,
+              "non_significant_samples": 735,
+              "detected_sdc": 1,
+              "detected_significant_sdc": 0,
+              "false_positive_non_significant": 1,
+              "sdc_recall": 0.08333333333333333,
+              "significant_sdc_recall": 0.0,
+              "non_significant_fpr": 0.0013605442176870747,
+              "significant_sdc_precision": 0.0,
+              "significant_sdc_f1": 0.0
+            },
+            "9": {
+              "samples": 737,
+              "detected": 3,
+              "sdc_samples": 20,
+              "significant_sdc_samples": 8,
+              "non_significant_samples": 729,
+              "detected_sdc": 3,
+              "detected_significant_sdc": 3,
+              "false_positive_non_significant": 0,
+              "sdc_recall": 0.15,
+              "significant_sdc_recall": 0.375,
+              "non_significant_fpr": 0.0,
+              "significant_sdc_precision": 1.0,
+              "significant_sdc_f1": 0.5454545454545454
+            }
+          }
+        }
+      },
+      "supplementary_operating_points": {
+        "0.005": {
+          "calibration": {
+            "threshold": 0.9548447132110596,
+            "target_fpr": 0.005,
+            "achieved_fpr": 0.0027214250371103412,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 170,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 170,
+            "detected_significant_sdc": 169,
+            "false_positive_non_significant": 1,
+            "sdc_recall": 0.576271186440678,
+            "significant_sdc_recall": 0.9037433155080213,
+            "non_significant_fpr": 0.00012410027302060066,
+            "significant_sdc_precision": 0.9941176470588236,
+            "significant_sdc_f1": 0.9467787114845937
+          }
+        },
+        "0.01": {
+          "calibration": {
+            "threshold": 0.5309101939201355,
+            "target_fpr": 0.01,
+            "achieved_fpr": 0.008411677387431964,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 300,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 170,
+            "detected_significant_sdc": 169,
+            "false_positive_non_significant": 131,
+            "sdc_recall": 0.576271186440678,
+            "significant_sdc_recall": 0.9037433155080213,
+            "non_significant_fpr": 0.016257135765698684,
+            "significant_sdc_precision": 0.5633333333333334,
+            "significant_sdc_f1": 0.6940451745379878
+          }
+        },
+        "0.02": {
+          "calibration": {
+            "threshold": 0.30701133608818054,
+            "target_fpr": 0.02,
+            "achieved_fpr": 0.01991588322612568,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 436,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 197,
+            "detected_significant_sdc": 170,
+            "false_positive_non_significant": 266,
+            "sdc_recall": 0.6677966101694915,
+            "significant_sdc_recall": 0.9090909090909091,
+            "non_significant_fpr": 0.03301067262347977,
+            "significant_sdc_precision": 0.38990825688073394,
+            "significant_sdc_f1": 0.5457463884430177
+          }
+        },
+        "0.05": {
+          "calibration": {
+            "threshold": 0.11834131181240082,
+            "target_fpr": 0.05,
+            "achieved_fpr": 0.04849084611578427,
+            "budget_feasible": true,
+            "negative_samples": 8084,
+            "forced_non_finite_positives": 0
+          },
+          "test_metrics": {
+            "samples": 8245,
+            "detected": 725,
+            "sdc_samples": 295,
+            "significant_sdc_samples": 187,
+            "non_significant_samples": 8058,
+            "detected_sdc": 209,
+            "detected_significant_sdc": 174,
+            "false_positive_non_significant": 551,
+            "sdc_recall": 0.7084745762711865,
+            "significant_sdc_recall": 0.93048128342246,
+            "non_significant_fpr": 0.06837925043435096,
+            "significant_sdc_precision": 0.24,
+            "significant_sdc_f1": 0.3815789473684211
+          }
+        }
+      }
+    }
+  }
+}

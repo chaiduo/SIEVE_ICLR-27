@@ -1,0 +1,4 @@
+# Experiment runs contain raw telemetry, per-example predictions, and checkpoints
+# that are too large for source control. Curated paper artifacts are force-added.
+*
+!.gitignore

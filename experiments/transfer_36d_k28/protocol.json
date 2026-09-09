@@ -1,0 +1,13 @@
+{
+  "protocol": {
+    "source": "frozen 36D/K=28 detector and threshold selected on the source Fit/Calibration partitions",
+    "target": "target's own clean-trained Mapping materializes Final Test features; no target Fit/Calibration fault labels are read",
+    "evaluation": "target Final Test fault labels are used only after frozen prediction for offline scoring",
+    "strict_finite": "all 36 target Final Test features finite after numeric cleaning; NaN, +/-Inf, and values beyond float32 range excluded"
+  },
+  "feature_root": "/data01/cd_workspace/Detect_SDC/experiments/step_ablation_36d",
+  "source_detector_artifact": "experiments/step_ablation_36d/{job}/k_28/output/significant_sdc_detector.ubj",
+  "source_summary_artifact": "experiments/step_ablation_36d/{job}/k_28/output/metrics_summary.json",
+  "target_feature_artifact": "experiments/step_ablation_36d/{job}/k_28/features.csv filtered to split=test",
+  "diagonal_validation_artifact": "experiments/comparison_36d_k28/results/{job}/evaluation_strict_finite/metrics.json"
+}

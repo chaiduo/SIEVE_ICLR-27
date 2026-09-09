@@ -1,0 +1,10 @@
+job,model,dataset,injected_executions,finite_value_sdc_labeled,non_significant_sdc,significant_sdc,non_finite_value_sdc,invalid_fault_sdc,unlabeled_finite_value_sdc,significant_share_among_finite_value_sdc_percent
+qwen25_vl_earthvqa,Qwen2.5-VL-7B,EarthVQA,50000,12133,11151,982,678,0,102,8.093628945850162
+qwen25_vl_lingoqa,Qwen2.5-VL-7B,LingoQA,50000,9388,8455,933,673,0,32,9.938219002982532
+qwen25_vl_vqav2,Qwen2.5-VL-7B,VQAv2,50000,7904,6871,1033,663,0,50,13.069331983805668
+internvl3_earthvqa,InternVL3-8B,EarthVQA,50000,13460,11047,2413,638,0,129,17.927191679049034
+internvl3_lingoqa,InternVL3-8B,LingoQA,50000,11142,8569,2573,641,0,45,23.092802010411056
+internvl3_vqav2,InternVL3-8B,VQAv2,50000,11004,8407,2597,632,0,41,23.60050890585242
+llava15_earthvqa,LLaVA-1.5-7B,EarthVQA,50000,1205,494,711,459,0,3,59.004149377593365
+llava15_lingoqa,LLaVA-1.5-7B,LingoQA,50000,1461,698,763,466,0,12,52.224503764544835
+llava15_vqav2,LLaVA-1.5-7B,VQAv2,50000,771,61,710,449,0,1,92.0881971465629

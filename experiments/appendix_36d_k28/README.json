@@ -1,0 +1,10 @@
+{
+  "source_features": "experiments/step_ablation_36d/<job>/k_28",
+  "label_statistics_definition": {
+    "non_sdc": "injected execution with is_sdc=0",
+    "non_significant_sdc": "injected execution with is_sdc=1 and significance in {0,1}",
+    "significant_sdc": "injected execution with is_sdc=1 and significance=2"
+  },
+  "canonical_finite_definition": "Final-Test execution with at least one finite feature in canonical 72D/K=2 representation",
+  "component_ablation_source": "experiments/ablation_36d_k28_fit_only/detailed_metrics.csv"
+}

@@ -1,0 +1,42 @@
+{
+  "protocol": "current v2; 36D prefix-step ablation",
+  "k_values": [
+    1,
+    2,
+    4,
+    8,
+    12,
+    16,
+    20,
+    24,
+    28,
+    32
+  ],
+  "layer_pairs": [
+    [
+      6,
+      7
+    ],
+    [
+      24,
+      25
+    ],
+    [
+      26,
+      27
+    ]
+  ],
+  "feature_count": 36,
+  "jobs": [
+    "qwen25_vl_earthvqa",
+    "qwen25_vl_lingoqa",
+    "qwen25_vl_vqav2",
+    "llava15_earthvqa",
+    "llava15_lingoqa",
+    "llava15_vqav2",
+    "internvl3_earthvqa",
+    "internvl3_lingoqa",
+    "internvl3_vqav2"
+  ],
+  "cohort": "fixed K=2 non-all-NaN 48D Final Test cohort"
+}
