@@ -2,3 +2,6 @@
 # that are too large for source control. Curated paper artifacts are force-added.
 *
 !.gitignore
+# Traverse directories to expose README files without tracking raw artifacts.
+!*/
+!README.md

@@ -1,5 +1,8 @@
 # SIEVE
 
+[Detailed Experiment Handbook (中文)](experiments/README.md): protocols,
+data lineage, commands, artifact schemas, results, and historical-version caveats.
+
 ## Final Results
 
 **Nine-task Final-Test macro average, Significant-SDC as the positive class.**
